@@ -1,0 +1,43 @@
+{
+  "name": "SKY130 8-bit SAR ADC",
+  "supply_v": 1.8,
+  "supply_type": "single",
+  "measurements": {
+    "resolution_bits": {
+      "target": "8",
+      "weight": 15,
+      "unit": "bits",
+      "description": "Number of output bits"
+    },
+    "sample_rate_ksps": {
+      "target": ">100",
+      "weight": 20,
+      "unit": "kSPS",
+      "description": "Maximum sampling rate"
+    },
+    "inl_lsb": {
+      "target": "<1",
+      "weight": 20,
+      "unit": "LSB",
+      "description": "Integral nonlinearity"
+    },
+    "dnl_lsb": {
+      "target": "<0.5",
+      "weight": 20,
+      "unit": "LSB",
+      "description": "Differential nonlinearity (no missing codes)"
+    },
+    "sndr_db": {
+      "target": ">44",
+      "weight": 15,
+      "unit": "dB",
+      "description": "Signal-to-noise-and-distortion ratio"
+    },
+    "power_uw": {
+      "target": "<500",
+      "weight": 10,
+      "unit": "uW",
+      "description": "Total power dissipation"
+    }
+  }
+}

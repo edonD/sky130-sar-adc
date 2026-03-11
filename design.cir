@@ -1,0 +1,88 @@
+* SKY130 StrongARM Comparator — SAR ADC Starter
+* Start with the comparator block. Agent builds up to full SAR ADC.
+
+.lib "sky130_models/sky130.lib.spice" tt
+
+* Supply
+Vdd vdd 0 1.8
+Vss vss 0 0
+
+* Clock
+Vclk clk 0 PULSE(0 1.8 0 0.1n 0.1n 5n 10n)
+
+* Differential input (ramp for testing)
+Vinp inp 0 DC 0.9
+Vinm inm 0 DC 0.9
+
+* === StrongARM Latch Comparator ===
+
+* Input NMOS differential pair
+XM1 na inp ntail vss sky130_fd_pr__nfet_01v8 W={Win}u L={Lin}u nf=1
+XM2 nb inm ntail vss sky130_fd_pr__nfet_01v8 W={Win}u L={Lin}u nf=1
+
+* Tail current (clocked NMOS)
+XMtail ntail clk vss vss sky130_fd_pr__nfet_01v8 W={Wtail}u L={Ltail}u nf=1
+
+* Cross-coupled PMOS latch
+XMp1 na nb vdd vdd sky130_fd_pr__pfet_01v8 W={Wlat}u L={Llat}u nf=1
+XMp2 nb na vdd vdd sky130_fd_pr__pfet_01v8 W={Wlat}u L={Llat}u nf=1
+
+* Cross-coupled NMOS latch
+XMn1 na nb vss vss sky130_fd_pr__nfet_01v8 W={Wlatn}u L={Llatn}u nf=1
+XMn2 nb na vss vss sky130_fd_pr__nfet_01v8 W={Wlatn}u L={Llatn}u nf=1
+
+* Precharge PMOS (reset when clk=low)
+XMr1 na clkb vdd vdd sky130_fd_pr__pfet_01v8 W={Wrst}u L=0.15u nf=1
+XMr2 nb clkb vdd vdd sky130_fd_pr__pfet_01v8 W={Wrst}u L=0.15u nf=1
+
+* Clock inverter for precharge
+XMci1 clkb clk vdd vdd sky130_fd_pr__pfet_01v8 W=2u L=0.15u nf=1
+XMci2 clkb clk vss vss sky130_fd_pr__nfet_01v8 W=1u L=0.15u nf=1
+
+* Output buffers (SR latch or just inverters)
+XMpo1 outp na vdd vdd sky130_fd_pr__pfet_01v8 W=2u L=0.15u nf=1
+XMno1 outp na vss vss sky130_fd_pr__nfet_01v8 W=1u L=0.15u nf=1
+XMpo2 outm nb vdd vdd sky130_fd_pr__pfet_01v8 W=2u L=0.15u nf=1
+XMno2 outm nb vss vss sky130_fd_pr__nfet_01v8 W=1u L=0.15u nf=1
+
+.options reltol=0.003 method=gear
+
+* === Measurements ===
+.control
+* Test 1: DC offset — sweep Vinp and find where comparator flips
+dc Vinp 0.85 0.95 0.001
+wrdata comp_dc v(outp) v(outm)
+
+* Find the crossover point (offset)
+meas dc vtrip when v(outp)=0.9
+let offset_mv = (vtrip - 0.9) * 1000
+echo "RESULT_OFFSET_MV" $&offset_mv
+
+* Test 2: Transient — verify comparator resolves correctly
+alter Vinp dc = 0.907
+tran 0.05n 100n
+wrdata comp_tran v(outp) v(outm) v(clk)
+
+* Measure resolution time (from clk rising edge to output settled)
+meas tran t_clk when v(clk)=0.9 rise=3
+meas tran t_resolved when v(outp)=0.2 fall=3
+let resolve_ns = (t_resolved - t_clk) * 1e9
+
+* Power
+meas tran avg_idd avg i(Vdd) from=50n to=100n
+let pwr = abs(avg_idd) * 1.8 * 1e6
+echo "RESULT_POWER_UW" $&pwr
+
+* Sample rate estimate (based on clock period)
+let fsample = 1 / 10n / 1000
+echo "RESULT_SAMPLE_RATE_KSPS" $&fsample
+
+* Placeholders — full ADC metrics require the complete SAR system
+echo "RESULT_INL_LSB 0"
+echo "RESULT_DNL_LSB 0"
+echo "RESULT_SNDR_DB 0"
+
+echo "RESULT_DONE"
+.endc
+
+.end

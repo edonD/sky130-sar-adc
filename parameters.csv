@@ -1,0 +1,10 @@
+name,min,max,scale
+Win,0.5,50,log
+Lin,0.15,2,log
+Wtail,1,100,log
+Ltail,0.15,2,log
+Wlat,0.5,50,log
+Llat,0.15,2,log
+Wlatn,0.5,50,log
+Llatn,0.15,2,log
+Wrst,0.5,20,log
