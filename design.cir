@@ -1,86 +1,89 @@
-* SKY130 StrongARM Comparator — SAR ADC Starter
-* Start with the comparator block. Agent builds up to full SAR ADC.
+* SKY130 SAR ADC — Proper StrongARM Latch Comparator
+* Iteration 1: Optimize comparator, estimate ADC metrics.
 
 .lib "sky130_models/sky130.lib.spice" tt
 
 * Supply
-Vdd vdd 0 1.8
-Vss vss 0 0
+Vdd vdd 0 DC 1.8
+Vss vss 0 DC 0
 
-* Clock
-Vclk clk 0 PULSE(0 1.8 0 0.1n 0.1n 5n 10n)
+* Clock — DC=1.8V for DC analysis (comp in eval mode)
+*        PULSE for transient (precharge/evaluate cycles, 100MHz)
+Vclk clk 0 DC 1.8 PULSE(0 1.8 0 0.1n 0.1n 5n 10n)
 
-* Differential input (ramp for testing)
+* Differential input
 Vinp inp 0 DC 0.9
 Vinm inm 0 DC 0.9
 
-* === StrongARM Latch Comparator ===
+* === Proper StrongARM Latch Comparator ===
+* Topology: tail switch + diff pair + cross-coupled inverter latch
+* NMOS latch sources connect to diff pair outputs (sa/sb),
+* so latch is disabled during precharge (sa=sb=VDD).
 
-* Input NMOS differential pair
-XM1 na inp ntail vss sky130_fd_pr__nfet_01v8 W={Win}u L={Lin}u nf=1
-XM2 nb inm ntail vss sky130_fd_pr__nfet_01v8 W={Win}u L={Lin}u nf=1
-
-* Tail current (clocked NMOS)
+* Tail current switch (clocked NMOS)
 XMtail ntail clk vss vss sky130_fd_pr__nfet_01v8 W={Wtail}u L={Ltail}u nf=1
 
+* Input NMOS differential pair
+XM1 sa inp ntail vss sky130_fd_pr__nfet_01v8 W={Win}u L={Lin}u nf=1
+XM2 sb inm ntail vss sky130_fd_pr__nfet_01v8 W={Win}u L={Lin}u nf=1
+
 * Cross-coupled PMOS latch
-XMp1 na nb vdd vdd sky130_fd_pr__pfet_01v8 W={Wlat}u L={Llat}u nf=1
-XMp2 nb na vdd vdd sky130_fd_pr__pfet_01v8 W={Wlat}u L={Llat}u nf=1
+XMp1 outn outp vdd vdd sky130_fd_pr__pfet_01v8 W={Wlat}u L={Llat}u nf=1
+XMp2 outp outn vdd vdd sky130_fd_pr__pfet_01v8 W={Wlat}u L={Llat}u nf=1
 
-* Cross-coupled NMOS latch
-XMn1 na nb vss vss sky130_fd_pr__nfet_01v8 W={Wlatn}u L={Llatn}u nf=1
-XMn2 nb na vss vss sky130_fd_pr__nfet_01v8 W={Wlatn}u L={Llatn}u nf=1
+* Cross-coupled NMOS latch (sources to sa/sb, NOT vss)
+XMn1 outn outp sa vss sky130_fd_pr__nfet_01v8 W={Wlatn}u L={Llatn}u nf=1
+XMn2 outp outn sb vss sky130_fd_pr__nfet_01v8 W={Wlatn}u L={Llatn}u nf=1
 
-* Precharge PMOS (reset when clk=low)
-XMr1 na clkb vdd vdd sky130_fd_pr__pfet_01v8 W={Wrst}u L=0.15u nf=1
-XMr2 nb clkb vdd vdd sky130_fd_pr__pfet_01v8 W={Wrst}u L=0.15u nf=1
+* Reset PMOS — precharge sa, sb, outn, outp to VDD when clk=0
+XMr1 sa clk vdd vdd sky130_fd_pr__pfet_01v8 W={Wrst}u L=0.15u nf=1
+XMr2 sb clk vdd vdd sky130_fd_pr__pfet_01v8 W={Wrst}u L=0.15u nf=1
+XMr3 outn clk vdd vdd sky130_fd_pr__pfet_01v8 W={Wrst}u L=0.15u nf=1
+XMr4 outp clk vdd vdd sky130_fd_pr__pfet_01v8 W={Wrst}u L=0.15u nf=1
 
-* Clock inverter for precharge
-XMci1 clkb clk vdd vdd sky130_fd_pr__pfet_01v8 W=2u L=0.15u nf=1
-XMci2 clkb clk vss vss sky130_fd_pr__nfet_01v8 W=1u L=0.15u nf=1
-
-* Output buffers (SR latch or just inverters)
-XMpo1 outp na vdd vdd sky130_fd_pr__pfet_01v8 W=2u L=0.15u nf=1
-XMno1 outp na vss vss sky130_fd_pr__nfet_01v8 W=1u L=0.15u nf=1
-XMpo2 outm nb vdd vdd sky130_fd_pr__pfet_01v8 W=2u L=0.15u nf=1
-XMno2 outm nb vss vss sky130_fd_pr__nfet_01v8 W=1u L=0.15u nf=1
+* Output buffers (inverters for clean digital output)
+XMbp1 bufp outn vdd vdd sky130_fd_pr__pfet_01v8 W=2u L=0.15u nf=1
+XMbn1 bufp outn vss vss sky130_fd_pr__nfet_01v8 W=1u L=0.15u nf=1
+XMbp2 bufn outp vdd vdd sky130_fd_pr__pfet_01v8 W=2u L=0.15u nf=1
+XMbn2 bufn outp vss vss sky130_fd_pr__nfet_01v8 W=1u L=0.15u nf=1
 
 .options reltol=0.003 method=gear
 
 * === Measurements ===
 .control
-* Test 1: DC offset — sweep Vinp and find where comparator flips
-dc Vinp 0.85 0.95 0.001
-wrdata comp_dc v(outp) v(outm)
 
-* Find the crossover point (offset)
-meas dc vtrip when v(outp)=0.9
-let offset_mv = (vtrip - 0.9) * 1000
-echo "RESULT_OFFSET_MV" $&offset_mv
+* -------------------------------------------------------
+* Test 1: DC sweep for offset
+* With clk DC=1.8V, comparator is in evaluation mode.
+* bufp rises from 0 to VDD as Vinp crosses trip point.
+* -------------------------------------------------------
+dc Vinp 0.85 0.95 0.0005
+meas dc vtrip find v(inp) when v(bufp)=0.9 rise=1
+echo "RESULT_VTRIP $&vtrip"
 
-* Test 2: Transient — verify comparator resolves correctly
-alter Vinp dc = 0.907
+* -------------------------------------------------------
+* Test 2: Transient with 1-LSB differential (7 mV)
+* Measure resolve time and verify correct comparison.
+* -------------------------------------------------------
+alter Vinp = 0.9035
+alter Vinm = 0.9
 tran 0.05n 100n
-wrdata comp_tran v(outp) v(outm) v(clk)
 
-* Measure resolution time (from clk rising edge to output settled)
-meas tran t_clk when v(clk)=0.9 rise=3
-meas tran t_resolved when v(outp)=0.2 fall=3
-let resolve_ns = (t_resolved - t_clk) * 1e9
+* Resolve time: 5th clock edge to output (well-settled cycle)
+meas tran tclk when v(clk)=0.9 rise=5
+meas tran tout when v(bufp)=0.9 rise=5
+echo "RESULT_TCLK $&tclk"
+echo "RESULT_TOUT $&tout"
 
-* Power
-meas tran avg_idd avg i(Vdd) from=50n to=100n
-let pwr = abs(avg_idd) * 1.8 * 1e6
-echo "RESULT_POWER_UW" $&pwr
+* Check correct decision during 5th evaluation (44ns is mid-eval)
+meas tran outp_val find v(bufp) at=44n
+meas tran outm_val find v(bufn) at=44n
+echo "RESULT_OUTP_VAL $&outp_val"
+echo "RESULT_OUTM_VAL $&outm_val"
 
-* Sample rate estimate (based on clock period)
-let fsample = 1 / 10n / 1000
-echo "RESULT_SAMPLE_RATE_KSPS" $&fsample
-
-* Placeholders — full ADC metrics require the complete SAR system
-echo "RESULT_INL_LSB 0"
-echo "RESULT_DNL_LSB 0"
-echo "RESULT_SNDR_DB 0"
+* Average supply current (power measurement)
+meas tran avg_idd avg i(Vdd) from=20n to=100n
+echo "RESULT_AVG_IDD $&avg_idd"
 
 echo "RESULT_DONE"
 .endc
