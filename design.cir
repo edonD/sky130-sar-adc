@@ -1,5 +1,6 @@
-* SKY130 SAR ADC — StrongARM Comparator with CDAC Loading
-* Iteration 2: Comparator with realistic CDAC loading for SAR ADC validation.
+* SKY130 SAR ADC — Double-Tail Sense-Amplifier Comparator
+* Iteration 2: Double-tail topology for better speed, lower offset, reduced kickback.
+* Separate integration (stage 1) and latch (stage 2) with independent tail currents.
 
 .lib "sky130_models/sky130.lib.spice" tt
 
@@ -17,35 +18,41 @@ Vinm inm 0 DC 0.9
 
 * === CDAC Loading Model ===
 * Switch resistance + capacitive load models realistic CDAC interface
-* Rsw = DAC switch on-resistance, Cload = total CDAC capacitance per side
 Rsw_p inp inp_c {Rsw}
 Rsw_n inm inm_c {Rsw}
 Ccdac_p inp_c vss {Cload}p
 Ccdac_n inm_c vss {Cload}p
 
-* === StrongARM Latch Comparator ===
-* Topology: tail switch + diff pair + cross-coupled inverter latch
+* === Double-Tail Sense-Amplifier Comparator ===
 
-* Tail current switch (clocked NMOS)
-XMtail ntail clk vss vss sky130_fd_pr__nfet_01v8 W={Wtail}u L={Ltail}u nf=1
+* --- Stage 1: Integration ---
+* Tail NMOS (clocked) — controls integration current
+XMtail1 ntail1 clk vss vss sky130_fd_pr__nfet_01v8 W={Wtail1}u L={Ltail1}u nf=1
 
-* Input NMOS differential pair (driven through CDAC RC)
-XM1 sa inp_c ntail vss sky130_fd_pr__nfet_01v8 W={Win}u L={Lin}u nf=1
-XM2 sb inm_c ntail vss sky130_fd_pr__nfet_01v8 W={Win}u L={Lin}u nf=1
+* Input NMOS differential pair
+XM1 sa inp_c ntail1 vss sky130_fd_pr__nfet_01v8 W={Win}u L={Lin}u nf=1
+XM2 sb inm_c ntail1 vss sky130_fd_pr__nfet_01v8 W={Win}u L={Lin}u nf=1
 
-* Cross-coupled PMOS latch
-XMp1 outn outp vdd vdd sky130_fd_pr__pfet_01v8 W={Wlat}u L={Llat}u nf=1
-XMp2 outp outn vdd vdd sky130_fd_pr__pfet_01v8 W={Wlat}u L={Llat}u nf=1
+* Reset PMOS for sa, sb (precharge to VDD when clk=0)
+XMrsa sa clk vdd vdd sky130_fd_pr__pfet_01v8 W={Wrst}u L=0.15u nf=1
+XMrsb sb clk vdd vdd sky130_fd_pr__pfet_01v8 W={Wrst}u L=0.15u nf=1
 
-* Cross-coupled NMOS latch (sources to sa/sb, NOT vss)
-XMn1 outn outp sa vss sky130_fd_pr__nfet_01v8 W={Wlatn}u L={Llatn}u nf=1
-XMn2 outp outn sb vss sky130_fd_pr__nfet_01v8 W={Wlatn}u L={Llatn}u nf=1
+* --- Stage 2: Cross-coupled Latch ---
+* Tail NMOS for latch (clocked) — separate from integration
+XMtail2 ntail2 clk vss vss sky130_fd_pr__nfet_01v8 W={Wtail2}u L={Ltail2}u nf=1
 
-* Reset PMOS — precharge sa, sb, outn, outp to VDD when clk=0
-XMr1 sa clk vdd vdd sky130_fd_pr__pfet_01v8 W={Wrst}u L=0.15u nf=1
-XMr2 sb clk vdd vdd sky130_fd_pr__pfet_01v8 W={Wrst}u L=0.15u nf=1
-XMr3 outn clk vdd vdd sky130_fd_pr__pfet_01v8 W={Wrst}u L=0.15u nf=1
-XMr4 outp clk vdd vdd sky130_fd_pr__pfet_01v8 W={Wrst}u L=0.15u nf=1
+* PMOS pair — gates driven by sa/sb from integration stage
+* This couples the integration result into the latch
+XMp1 outn sa vdd vdd sky130_fd_pr__pfet_01v8 W={Wlatp}u L={Llatp}u nf=1
+XMp2 outp sb vdd vdd sky130_fd_pr__pfet_01v8 W={Wlatp}u L={Llatp}u nf=1
+
+* Cross-coupled NMOS latch — provides regenerative feedback
+XMn1 outn outp ntail2 vss sky130_fd_pr__nfet_01v8 W={Wlatn}u L={Llatn}u nf=1
+XMn2 outp outn ntail2 vss sky130_fd_pr__nfet_01v8 W={Wlatn}u L={Llatn}u nf=1
+
+* Reset PMOS for outputs (precharge to VDD when clk=0)
+XMro1 outn clk vdd vdd sky130_fd_pr__pfet_01v8 W={Wrst2}u L=0.15u nf=1
+XMro2 outp clk vdd vdd sky130_fd_pr__pfet_01v8 W={Wrst2}u L=0.15u nf=1
 
 * Output buffers (inverters for clean digital output)
 XMbp1 bufp outn vdd vdd sky130_fd_pr__pfet_01v8 W=2u L=0.15u nf=1

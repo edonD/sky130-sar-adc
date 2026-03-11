@@ -1,29 +1,37 @@
 #!/bin/bash
-cd "$(dirname "$0")"
-ITERATION=0
-LOG="run_loop.log"
-echo "=== SAR ADC Autoresearch Loop Started: $(date) ===" | tee -a "$LOG"
-while true; do
-    ITERATION=$((ITERATION + 1))
-    echo "" | tee -a "$LOG"
-    echo "=== ITERATION $ITERATION — $(date) ===" | tee -a "$LOG"
-    PROMPT="You are an autonomous analog circuit designer. Read program.md for full instructions.
+cd ~/sky130-sar-adc
 
-Current iteration: $ITERATION
+while true; do
+    echo "$(date): Starting new iteration..."
+
+    PROMPT='You are an autonomous analog circuit design agent working on a SAR ADC in ~/sky130-sar-adc/.
+Read the README.md, design.cir, results.tsv, and any existing code to understand the project state.
 
 Do ONE complete experiment loop iteration:
-1. Read results.tsv, design.cir, parameters.csv — understand current state
-2. Analyze what's limiting performance (read measurements.json if it exists)
-3. Plan and implement a topology change in design.cir and parameters.csv
-4. Commit the topology change: git add -A && git commit -m 'topology: <description>'
-5. Run: python3 evaluate.py 2>&1 | tee run.log
-6. Read the evaluation output and analyze results
-7. Append results to results.tsv
-8. Commit and push everything: git add -A && git commit -m 'results: <score> — <summary>' && git push
+1. Analyze previous results in results.tsv to decide what to try next
+2. Modify design.cir with your chosen experiment
+3. Run the simulation and evaluate results
+4. Append results to results.tsv
 
-IMPORTANT: You MUST commit and push results before finishing. Do not skip any step."
-    echo "$PROMPT" | claude --dangerously-skip-permissions 2>&1 | tee -a "$LOG"
-    EXIT_CODE=$?
-    echo "Claude exited with code $EXIT_CODE at $(date)" | tee -a "$LOG"
+After committing results, generate visualization artifacts:
+
+Step A - Generate schematic:
+  python3 ~/cir2sch/cir2sch.py design.cir plots/schematic.sch
+
+Step B - Render schematic to SVG:
+  xvfb-run -a xschem --command "after 1000 {xschem print svg '"$(pwd)"'/plots/schematic.svg; after 500 {exit 0}}" plots/schematic.sch
+
+Step C - Generate progress plot from results.tsv:
+  Create a Python script that reads results.tsv and plots the score over iterations using matplotlib, saving to plots/progress.png. The plot should show iteration number on x-axis, score on y-axis, with a title "SAR ADC Optimization Progress". Use a clear style with grid lines.
+
+Step D - Commit and push everything:
+  git add -A && git commit -m "results: <score> — <brief summary of what was tried>" && git push
+
+Replace <score> with the actual score and <summary> with what you tried.
+Be thorough but efficient. Make sure all commands succeed before moving on.'
+
+    echo "$PROMPT" | claude --dangerously-skip-permissions
+
+    echo "$(date): Iteration complete, sleeping 5s..."
     sleep 5
 done
