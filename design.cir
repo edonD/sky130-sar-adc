@@ -55,10 +55,11 @@ XMro1 outn clk vdd vdd sky130_fd_pr__pfet_01v8 W={Wrst2}u L=0.15u nf=1
 XMro2 outp clk vdd vdd sky130_fd_pr__pfet_01v8 W={Wrst2}u L=0.15u nf=1
 
 * Output buffers (inverters for clean digital output)
-XMbp1 bufp outn vdd vdd sky130_fd_pr__pfet_01v8 W=2u L=0.15u nf=1
-XMbn1 bufp outn vss vss sky130_fd_pr__nfet_01v8 W=1u L=0.15u nf=1
-XMbp2 bufn outp vdd vdd sky130_fd_pr__pfet_01v8 W=2u L=0.15u nf=1
-XMbn2 bufn outp vss vss sky130_fd_pr__nfet_01v8 W=1u L=0.15u nf=1
+* bufp = inv(outp): when inp > inm, outp goes LOW, bufp goes HIGH
+XMbp1 bufp outp vdd vdd sky130_fd_pr__pfet_01v8 W=2u L=0.15u nf=1
+XMbn1 bufp outp vss vss sky130_fd_pr__nfet_01v8 W=1u L=0.15u nf=1
+XMbp2 bufn outn vdd vdd sky130_fd_pr__pfet_01v8 W=2u L=0.15u nf=1
+XMbn2 bufn outn vss vss sky130_fd_pr__nfet_01v8 W=1u L=0.15u nf=1
 
 .options reltol=0.003 method=gear
 

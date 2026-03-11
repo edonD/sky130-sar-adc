@@ -238,23 +238,62 @@ def parse_ngspice_output(output: str) -> Dict[str, float]:
 # Behavioral SAR ADC Validation
 # ---------------------------------------------------------------------------
 
-def sar_convert(vin, offset_v, noise_sigma=0):
-    """Perform a single 8-bit SAR conversion with comparator offset and noise."""
+def generate_cap_mismatch(unit_cap_fF=50.0, sigma_pct=0.5, seed=None):
+    """Generate capacitor mismatch for binary-weighted CDAC.
+
+    In SKY130, MIM caps have ~0.5% matching for 50fF unit caps.
+    Mismatch scales as sigma/sqrt(N_units) for N parallel unit caps.
+    Each bit i has 2^i unit caps, so mismatch decreases for MSBs.
+
+    Returns: array of actual cap weights (ideal would be [1, 2, 4, ..., 128]).
+    """
+    rng = np.random.RandomState(seed if seed is not None else 73)
+    weights = np.zeros(N_BITS)
+    for bit in range(N_BITS):
+        n_units = 2 ** bit  # number of unit caps for this bit
+        # Each unit cap has independent mismatch
+        unit_caps = 1.0 + rng.normal(0, sigma_pct / 100.0, size=n_units)
+        weights[bit] = np.sum(unit_caps)  # total weight for this bit
+    return weights
+
+
+def sar_convert(vin, offset_v, noise_sigma=0, cap_weights=None):
+    """Perform a single 8-bit SAR conversion with comparator offset, noise,
+    and capacitor mismatch.
+
+    Args:
+        cap_weights: actual CDAC weights per bit (None = ideal binary).
+    """
     code = 0
+    # Ideal weights for reference
+    ideal_total = float(2**N_BITS - 1)
+
     for bit in range(N_BITS - 1, -1, -1):
         trial_code = code | (1 << bit)
-        dac_v = trial_code * LSB
+
+        if cap_weights is not None:
+            # DAC voltage using actual (mismatched) cap weights
+            dac_v = 0.0
+            for b in range(N_BITS):
+                if trial_code & (1 << b):
+                    dac_v += cap_weights[b]
+            # Normalize to voltage: sum of all weights maps to VDD
+            total_weight = np.sum(cap_weights)
+            dac_v = dac_v / total_weight * VDD
+        else:
+            dac_v = trial_code * LSB
+
         noise = np.random.normal(0, noise_sigma) if noise_sigma > 0 else 0
-        # Comparator: vin + noise > dac_v + offset?
         if (vin + noise) >= (dac_v + offset_v):
             code = trial_code
     return code
 
 
-def run_ramp_test(offset_v, noise_sigma=0, n_points=4096):
+def run_ramp_test(offset_v, noise_sigma=0, n_points=4096, cap_weights=None):
     """Run a full-scale ramp test, return input voltages and output codes."""
     vin_values = np.linspace(0, VDD, n_points, endpoint=False) + VDD / (2 * n_points)
-    codes = np.array([sar_convert(v, offset_v, noise_sigma) for v in vin_values])
+    codes = np.array([sar_convert(v, offset_v, noise_sigma, cap_weights)
+                      for v in vin_values])
     return vin_values, codes
 
 
@@ -288,7 +327,7 @@ def compute_inl_dnl(vin_values, codes):
     return inl, dnl, code_counts
 
 
-def run_sine_test(offset_v, noise_sigma=0, n_samples=2048):
+def run_sine_test(offset_v, noise_sigma=0, n_samples=2048, cap_weights=None):
     """Run a coherent sine wave test for SNDR measurement.
 
     Uses coherent sampling: f_in/f_s = M/N where M and N are coprime.
@@ -303,7 +342,7 @@ def run_sine_test(offset_v, noise_sigma=0, n_samples=2048):
 
     for i in range(N):
         vin = dc + amplitude * np.sin(2 * np.pi * M * i / N)
-        codes[i] = sar_convert(vin, offset_v, noise_sigma)
+        codes[i] = sar_convert(vin, offset_v, noise_sigma, cap_weights)
 
     return codes, M, N
 
@@ -364,13 +403,32 @@ def run_behavioral_sar_validation(measurements):
     # Use a conservative estimate
     noise_sigma = 0.5e-3  # 0.5 mV rms
 
+    # CDAC capacitor mismatch model
+    # Cload parameter gives effective unit cap size in pF
+    cload_pF = measurements.get("Cload", 5.0)  # from parameters
+    # SKY130 MIM cap matching: ~0.5% for 50fF, scales as 1/sqrt(area)
+    # sigma_pct = 0.5% * sqrt(50fF / actual_unit_cap_fF)
+    unit_cap_fF = max(10.0, cload_pF * 1000.0 / N_CODES)  # estimate unit cap
+    sigma_pct = 0.5 * np.sqrt(50.0 / unit_cap_fF)
+    sigma_pct = min(sigma_pct, 2.0)  # cap at 2%
+
     print(f"  Comparator: offset={offset_mv:.2f} mV, resolve={resolve_ns:.2f} ns")
     print(f"  Noise model: sigma={noise_sigma*1e3:.2f} mV ({noise_sigma/LSB*1e3:.1f}m LSB)")
+    print(f"  CDAC mismatch: unit_cap~{unit_cap_fF:.0f}fF, sigma={sigma_pct:.2f}%")
+
+    # Generate CDAC capacitor mismatch (deterministic seed for consistency)
+    cap_weights = generate_cap_mismatch(unit_cap_fF, sigma_pct, seed=42)
+    print(f"  Cap weights (ideal vs actual):")
+    for b in range(N_BITS):
+        ideal = 2**b
+        print(f"    bit {b}: ideal={ideal:.0f}, actual={cap_weights[b]:.4f} "
+              f"(err={((cap_weights[b]/ideal)-1)*100:.3f}%)")
 
     # ---- Ramp Test (INL/DNL) ----
     print("  Running ramp test (4096 points)...")
     np.random.seed(42)  # deterministic for DE consistency
-    vin_values, codes = run_ramp_test(offset_v, noise_sigma, n_points=4096)
+    vin_values, codes = run_ramp_test(offset_v, noise_sigma, n_points=4096,
+                                       cap_weights=cap_weights)
     inl, dnl, code_counts = compute_inl_dnl(vin_values, codes)
 
     # Exclude edge codes for max calculation
@@ -383,7 +441,8 @@ def run_behavioral_sar_validation(measurements):
 
     # ---- Sine Test (SNDR) ----
     print("  Running sine test (2048 samples)...")
-    sine_codes, M, N = run_sine_test(offset_v, noise_sigma, n_samples=2048)
+    sine_codes, M, N = run_sine_test(offset_v, noise_sigma, n_samples=2048,
+                                      cap_weights=cap_weights)
     sndr, fft_power = compute_sndr(sine_codes, signal_bin=M)
 
     enob = (sndr - 1.76) / 6.02
