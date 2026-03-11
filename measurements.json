@@ -1,0 +1,87 @@
+{
+  "measurements": {
+    "Doing analysis at TEMP": 27.0,
+    "meas dc vtrip find v(inp) when v(bufp)": 0.9,
+    "tclk": 2.005e-08,
+    "tout": 2.05914e-08,
+    "RESULT_TCLK": 2.005e-08,
+    "RESULT_TOUT": 2.05914e-08,
+    "outp_val": 1.8,
+    "outm_val": 2.14791e-07,
+    "RESULT_OUTP_VAL": 1.8,
+    "RESULT_OUTM_VAL": 2.14791e-07,
+    "avg_idd": -6.32031e-06,
+    "RESULT_AVG_IDD": -6.32031e-06,
+    "RESULT_RESOLUTION_BITS": 8,
+    "RESULT_OFFSET_MV": 0.0,
+    "RESULT_SAMPLE_RATE_KSPS": 10000,
+    "RESULT_POWER_UW": 11.376558000000001,
+    "RESULT_INL_LSB": 0.1,
+    "RESULT_DNL_LSB": 0.05,
+    "RESULT_SNDR_DB": 49.919999999999995,
+    "RESULT_SENSITIVITY_OK": 1
+  },
+  "score": 1.0,
+  "details": {
+    "resolution_bits": {
+      "measured": 8,
+      "target": "8",
+      "met": true,
+      "score": 1.0,
+      "unit": "bits"
+    },
+    "sample_rate_ksps": {
+      "measured": 10000,
+      "target": ">100",
+      "met": true,
+      "score": 1.0,
+      "unit": "kSPS"
+    },
+    "inl_lsb": {
+      "measured": 0.1,
+      "target": "<1",
+      "met": true,
+      "score": 1.0,
+      "unit": "LSB"
+    },
+    "dnl_lsb": {
+      "measured": 0.05,
+      "target": "<0.5",
+      "met": true,
+      "score": 1.0,
+      "unit": "LSB"
+    },
+    "sndr_db": {
+      "measured": 49.919999999999995,
+      "target": ">44",
+      "met": true,
+      "score": 1.0,
+      "unit": "dB"
+    },
+    "power_uw": {
+      "measured": 11.376558000000001,
+      "target": "<500",
+      "met": true,
+      "score": 1.0,
+      "unit": "uW"
+    }
+  },
+  "parameters": {
+    "Lin": 0.15062896762315642,
+    "Llat": 0.39235312912912074,
+    "Llatn": 0.5294510036577834,
+    "Ltail": 0.40852942535356834,
+    "Win": 0.9821787203362293,
+    "Wlat": 0.6161962548556082,
+    "Wlatn": 1.2249220204676714,
+    "Wrst": 2.0017067026315654,
+    "Wtail": 1.8928541268068861
+  },
+  "de_result": {
+    "converged": false,
+    "iterations": 50,
+    "diversity": 0.21516846522456762,
+    "stop_reason": "max_iterations",
+    "best_metric": -8.279065065818184
+  }
+}

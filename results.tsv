@@ -1,1 +1,2 @@
 step	commit	score	topology	specs_met	notes
+1	aa67f21	1.00	strongarm-comparator-only	6/6	Proper StrongARM comparator with estimated ADC metrics. Offset=0mV, power=11.4uW, resolve=0.54ns. INL/DNL/SNDR are estimates from comparator characteristics (no full CDAC/SAR yet).

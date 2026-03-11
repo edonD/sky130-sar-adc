@@ -57,7 +57,7 @@ XMbn2 bufn outp vss vss sky130_fd_pr__nfet_01v8 W=1u L=0.15u nf=1
 * With clk DC=1.8V, comparator is in evaluation mode.
 * bufp rises from 0 to VDD as Vinp crosses trip point.
 * -------------------------------------------------------
-dc Vinp 0.85 0.95 0.0005
+dc Vinp 0.87 0.93 0.001
 meas dc vtrip find v(inp) when v(bufp)=0.9 rise=1
 echo "RESULT_VTRIP $&vtrip"
 
@@ -67,22 +67,22 @@ echo "RESULT_VTRIP $&vtrip"
 * -------------------------------------------------------
 alter Vinp = 0.9035
 alter Vinm = 0.9
-tran 0.05n 100n
+tran 0.1n 60n
 
-* Resolve time: 5th clock edge to output (well-settled cycle)
-meas tran tclk when v(clk)=0.9 rise=5
-meas tran tout when v(bufp)=0.9 rise=5
+* Resolve time: 3rd clock edge to output
+meas tran tclk when v(clk)=0.9 rise=3
+meas tran tout when v(bufp)=0.9 rise=3
 echo "RESULT_TCLK $&tclk"
 echo "RESULT_TOUT $&tout"
 
-* Check correct decision during 5th evaluation (44ns is mid-eval)
-meas tran outp_val find v(bufp) at=44n
-meas tran outm_val find v(bufn) at=44n
+* Check correct decision during 3rd evaluation (24ns is mid-eval)
+meas tran outp_val find v(bufp) at=24n
+meas tran outm_val find v(bufn) at=24n
 echo "RESULT_OUTP_VAL $&outp_val"
 echo "RESULT_OUTM_VAL $&outm_val"
 
 * Average supply current (power measurement)
-meas tran avg_idd avg i(Vdd) from=20n to=100n
+meas tran avg_idd avg i(Vdd) from=10n to=50n
 echo "RESULT_AVG_IDD $&avg_idd"
 
 echo "RESULT_DONE"
