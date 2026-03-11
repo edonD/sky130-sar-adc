@@ -1,20 +1,35 @@
 Loading design...
 Design: SKY130 8-bit SAR ADC
-Parameters: 11
+Parameters: 14
 Specs: 6
 
-DE: 11 params, pop=100, patience=50, workers=32
-[DE] iter    1 | best: -8.232618e+00 | no_improve:   0 | div: 0.2887 | dt: 94.808s
-[DE] iter    2 | best: -8.232618e+00 | no_improve:   1 | div: 0.2881 | dt: 94.863s
-[DE] iter    3 | best: -8.232618e+00 | no_improve:   2 | div: 0.2881 | dt: 94.832s
-[DE] iter    4 | best: -8.238889e+00 | no_improve:   0 | div: 0.2875 | dt: 94.829s
-[DE] iter    5 | best: -8.264954e+00 | no_improve:   0 | div: 0.2867 | dt: 94.712s
-[DE] iter    6 | best: -8.264954e+00 | no_improve:   1 | div: 0.2864 | dt: 94.672s
-[DE] iter    7 | best: -8.264954e+00 | no_improve:   2 | div: 0.2857 | dt: 94.833s
-[DE] iter    8 | best: -8.264954e+00 | no_improve:   3 | div: 0.2860 | dt: 94.787s
-[DE] iter    9 | best: -8.264954e+00 | no_improve:   4 | div: 0.2858 | dt: 94.847s
-[DE] iter   10 | best: -8.264954e+00 | no_improve:   5 | div: 0.2860 | dt: 94.795s
-[DE] iter   11 | best: -8.264954e+00 | no_improve:   6 | div: 0.2860 | dt: 94.808s
-[DE] iter   12 | best: -8.264954e+00 | no_improve:   7 | div: 0.2865 | dt: 94.914s
-[DE] iter   13 | best: -8.264954e+00 | no_improve:   8 | div: 0.2862 | dt: 94.755s
-[DE] iter   14 | best: -8.272848e+00 | no_improve:   0 | div: 0.2856 | dt: 84.064s
+DE: 14 params, pop=100, patience=50, workers=32
+[DE] iter    1 | best: -8.262323e+00 | no_improve:   0 | div: 0.2886 | dt: 94.748s
+[DE] iter    2 | best: -8.262323e+00 | no_improve:   1 | div: 0.2886 | dt: 94.736s
+[DE] iter    3 | best: -8.262323e+00 | no_improve:   2 | div: 0.2891 | dt: 94.735s
+[DE] iter    4 | best: -8.262323e+00 | no_improve:   3 | div: 0.2887 | dt: 94.657s
+[DE] iter    5 | best: -8.262323e+00 | no_improve:   4 | div: 0.2888 | dt: 94.816s
+[DE] iter    6 | best: -8.262323e+00 | no_improve:   5 | div: 0.2883 | dt: 94.811s
+[DE] iter    7 | best: -8.262323e+00 | no_improve:   6 | div: 0.2867 | dt: 94.750s
+[DE] iter    8 | best: -8.262323e+00 | no_improve:   7 | div: 0.2867 | dt: 94.858s
+[DE] iter    9 | best: -8.262323e+00 | no_improve:   8 | div: 0.2875 | dt: 95.050s
+[DE] iter   10 | best: -8.262323e+00 | no_improve:   9 | div: 0.2875 | dt: 94.701s
+[DE] iter   11 | best: -8.262323e+00 | no_improve:  10 | div: 0.2875 | dt: 94.939s
+[DE] iter   12 | best: -8.262323e+00 | no_improve:  11 | div: 0.2875 | dt: 94.861s
+[DE] iter   13 | best: -8.262323e+00 | no_improve:  12 | div: 0.2874 | dt: 94.790s
+[DE] iter   14 | best: -8.262323e+00 | no_improve:  13 | div: 0.2867 | dt: 94.731s
+[DE] iter   15 | best: -8.262323e+00 | no_improve:  14 | div: 0.2866 | dt: 94.866s
+[DE] iter   16 | best: -8.262323e+00 | no_improve:  15 | div: 0.2866 | dt: 94.801s
+[DE] iter   17 | best: -8.262323e+00 | no_improve:  16 | div: 0.2848 | dt: 94.585s
+[DE] iter   18 | best: -8.262323e+00 | no_improve:  17 | div: 0.2848 | dt: 94.808s
+[DE] iter   19 | best: -8.262323e+00 | no_improve:  18 | div: 0.2848 | dt: 94.658s
+[DE] iter   20 | best: -8.262323e+00 | no_improve:  19 | div: 0.2848 | dt: 94.777s
+[DE] iter   21 | best: -8.262323e+00 | no_improve:  20 | div: 0.2848 | dt: 94.687s
+[DE] iter   22 | best: -8.262323e+00 | no_improve:  21 | div: 0.2859 | dt: 94.784s
+[DE] iter   23 | best: -8.262323e+00 | no_improve:  22 | div: 0.2859 | dt: 94.703s
+[DE] iter   24 | best: -8.262323e+00 | no_improve:  23 | div: 0.2859 | dt: 94.924s
+[DE] iter   25 | best: -8.262323e+00 | no_improve:  24 | div: 0.2859 | dt: 94.834s
+[DE] iter   26 | best: -8.262323e+00 | no_improve:  25 | div: 0.2851 | dt: 94.713s
+[DE] iter   27 | best: -8.262323e+00 | no_improve:  26 | div: 0.2847 | dt: 94.845s
+[DE] iter   28 | best: -8.262323e+00 | no_improve:  27 | div: 0.2847 | dt: 94.734s
+[DE] iter   29 | best: -8.262323e+00 | no_improve:  28 | div: 0.2847 | dt: 94.678s

@@ -1,27 +1,28 @@
 # SAR ADC Design Agent
 
-Read these files before doing anything:
-1. `program.md` — the full experiment loop, rules, and validation requirements
-2. `specs.json` — target specifications (DO NOT MODIFY)
-3. `design.cir` + `parameters.csv` — current state
+You are a fully autonomous analog circuit designer with complete freedom over your approach.
 
-## Research First
-- **SEARCH THE WEB** whenever you need ideas, circuit topologies, design techniques, or debugging help
-- Use WebSearch/WebFetch to look up papers, application notes, textbook techniques, forum posts — anything that helps
-- Don't rely only on what you already know. Real engineers look things up. You should too.
-- When stuck, search for the specific problem (e.g. "SKY130 8-bit SAR ADC capacitive DAC sizing")
-- When exploring new topologies, search for proven designs and adapt them
+## Setup
+1. Read program.md for the experiment structure and validation requirements
+2. Read specs.json for target specifications — these are the only constraint
+3. Read design.cir, parameters.csv, results.tsv for current state
 
-## Key Rules
-- Modify ONLY `design.cir`, `parameters.csv`, and `evaluate.py`
-- NEVER edit `specs.json`, `program.md`, model files, or `de/engine.py`
-- NEVER set parameter values — define ranges, let DE optimize
-- NEVER declare success without full ramp test (all 256 codes) and FFT verification
-- ALWAYS test comparator and DAC separately before full system simulation
-- ALWAYS `git add -A && git push` so every commit is self-contained
+## Freedom
+You can modify ANY file except specs.json. You choose:
+- The circuit topology
+- The optimization algorithm (DE, Bayesian Optimization, CMA-ES, Optuna, manual tuning, whatever works)
+- The evaluation methodology
+- What to plot and track
+- pip install anything you need
 
-## Commands
-```bash
-python evaluate.py 2>&1 | tee run.log          # full DE run
-python evaluate.py --quick 2>&1 | tee run.log   # quick sanity check
-```
+The existing de/engine.py and evaluate.py are starting points, not sacred. Replace them if you have a better idea.
+
+## One Rule
+Every meaningful result must be committed and pushed: git add -A && git commit -m '<description>' && git push
+
+## Tools Available
+- xschem is installed for schematic rendering (use: xvfb-run -a xschem --command "after 1000 {xschem print svg output.svg; after 500 {exit 0}}" input.sch)
+- ~/cir2sch/cir2sch.py converts .cir netlists to xschem .sch files
+- Web search is available — use it to research topologies, optimization methods, design techniques
+- ngspice for simulation
+- SKY130 PDK models in sky130_models/
