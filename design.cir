@@ -1,5 +1,5 @@
-* SKY130 SAR ADC — Proper StrongARM Latch Comparator
-* Iteration 1: Optimize comparator, estimate ADC metrics.
+* SKY130 SAR ADC — StrongARM Comparator with CDAC Loading
+* Iteration 2: Comparator with realistic CDAC loading for SAR ADC validation.
 
 .lib "sky130_models/sky130.lib.spice" tt
 
@@ -15,17 +15,23 @@ Vclk clk 0 DC 1.8 PULSE(0 1.8 0 0.1n 0.1n 5n 10n)
 Vinp inp 0 DC 0.9
 Vinm inm 0 DC 0.9
 
-* === Proper StrongARM Latch Comparator ===
+* === CDAC Loading Model ===
+* Switch resistance + capacitive load models realistic CDAC interface
+* Rsw = DAC switch on-resistance, Cload = total CDAC capacitance per side
+Rsw_p inp inp_c {Rsw}
+Rsw_n inm inm_c {Rsw}
+Ccdac_p inp_c vss {Cload}p
+Ccdac_n inm_c vss {Cload}p
+
+* === StrongARM Latch Comparator ===
 * Topology: tail switch + diff pair + cross-coupled inverter latch
-* NMOS latch sources connect to diff pair outputs (sa/sb),
-* so latch is disabled during precharge (sa=sb=VDD).
 
 * Tail current switch (clocked NMOS)
 XMtail ntail clk vss vss sky130_fd_pr__nfet_01v8 W={Wtail}u L={Ltail}u nf=1
 
-* Input NMOS differential pair
-XM1 sa inp ntail vss sky130_fd_pr__nfet_01v8 W={Win}u L={Lin}u nf=1
-XM2 sb inm ntail vss sky130_fd_pr__nfet_01v8 W={Win}u L={Lin}u nf=1
+* Input NMOS differential pair (driven through CDAC RC)
+XM1 sa inp_c ntail vss sky130_fd_pr__nfet_01v8 W={Win}u L={Lin}u nf=1
+XM2 sb inm_c ntail vss sky130_fd_pr__nfet_01v8 W={Win}u L={Lin}u nf=1
 
 * Cross-coupled PMOS latch
 XMp1 outn outp vdd vdd sky130_fd_pr__pfet_01v8 W={Wlat}u L={Llat}u nf=1
