@@ -36,17 +36,24 @@ sed -i 's|^\.include "sky130_fd_pr_models/sonos_|* .include "sky130_fd_pr_models
 
 cd ..
 
-# Verify setup
-if python3 -c "print('Python OK')" 2>/dev/null; then
-    PYTHON=python3
-else
-    PYTHON=python
+# Symlink for ngspice-36 include path resolution
+if [ ! -L "sky130_fd_pr_models" ]; then
+    ln -sf sky130_models/sky130_fd_pr_models sky130_fd_pr_models
+    echo "Created sky130_fd_pr_models symlink"
 fi
+
+# Install Python packages system-wide
+pip3 install --break-system-packages numpy pandas matplotlib scipy 2>/dev/null \
+  || pip3 install numpy pandas matplotlib scipy 2>/dev/null \
+  || echo "WARNING: pip install failed, try manually"
+
+# .spiceinit in home dir
+cp -f .spiceinit ~/. 2>/dev/null || true
 
 echo "=== Verifying ngspice ==="
 which ngspice && ngspice --version || echo "WARNING: ngspice not found in PATH"
 
 echo "=== Verifying Python + numpy ==="
-$PYTHON -c "import numpy; print(f'numpy {numpy.__version__}')"
+python3 -c "import numpy; print(f'numpy {numpy.__version__}')"
 
 echo "=== Setup complete ==="
