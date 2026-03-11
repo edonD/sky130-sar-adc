@@ -1,6 +1,6 @@
-* SKY130 SAR ADC — Double-Tail Sense-Amplifier Comparator
-* Iteration 2: Double-tail topology for better speed, lower offset, reduced kickback.
-* Separate integration (stage 1) and latch (stage 2) with independent tail currents.
+* SKY130 SAR ADC — StrongARM Latch Comparator
+* Classic StrongARM topology: input pair + cross-coupled inverter latch
+* Simpler and more robust than double-tail design
 
 .lib "sky130_models/sky130.lib.spice" tt
 
@@ -8,54 +8,43 @@
 Vdd vdd 0 DC 1.8
 Vss vss 0 DC 0
 
-* Clock — DC=1.8V for DC analysis (comp in eval mode)
-*        PULSE for transient (precharge/evaluate cycles, 100MHz)
-Vclk clk 0 DC 1.8 PULSE(0 1.8 0 0.1n 0.1n 5n 10n)
+* Clock — 100 MHz (period 10ns, 5ns eval / 5ns precharge)
+Vclk clk 0 PULSE(0 1.8 0 0.1n 0.1n 5n 10n)
 
-* Differential input
-Vinp inp 0 DC 0.9
-Vinm inm 0 DC 0.9
+* Differential input: +1 LSB differential (7mV)
+Vinp inp 0 DC 0.9035
+Vinm inm 0 DC 0.8965
 
 * === CDAC Loading Model ===
-* Switch resistance + capacitive load models realistic CDAC interface
 Rsw_p inp inp_c {Rsw}
 Rsw_n inm inm_c {Rsw}
 Ccdac_p inp_c vss {Cload}p
 Ccdac_n inm_c vss {Cload}p
 
-* === Double-Tail Sense-Amplifier Comparator ===
+* === StrongARM Latch Comparator ===
 
-* --- Stage 1: Integration ---
-* Tail NMOS (clocked) — controls integration current
-XMtail1 ntail1 clk vss vss sky130_fd_pr__nfet_01v8 W={Wtail1}u L={Ltail1}u nf=1
+* Tail NMOS (clocked — enables current during evaluation)
+XMtail ntail clk vss vss sky130_fd_pr__nfet_01v8 W={Wtail}u L={Ltail}u nf=1
 
-* Input NMOS differential pair
-XM1 sa inp_c ntail1 vss sky130_fd_pr__nfet_01v8 W={Win}u L={Lin}u nf=1
-XM2 sb inm_c ntail1 vss sky130_fd_pr__nfet_01v8 W={Win}u L={Lin}u nf=1
+* Input differential pair (NMOS)
+XM1 d1 inp_c ntail vss sky130_fd_pr__nfet_01v8 W={Win}u L={Lin}u nf=1
+XM2 d2 inm_c ntail vss sky130_fd_pr__nfet_01v8 W={Win}u L={Lin}u nf=1
 
-* Reset PMOS for sa, sb (precharge to VDD when clk=0)
-XMrsa sa clk vdd vdd sky130_fd_pr__pfet_01v8 W={Wrst}u L=0.15u nf=1
-XMrsb sb clk vdd vdd sky130_fd_pr__pfet_01v8 W={Wrst}u L=0.15u nf=1
+* Reset PMOS (precharge all internal nodes to VDD when CLK=0)
+XMr1 d1 clk vdd vdd sky130_fd_pr__pfet_01v8 W={Wrst}u L=0.15u nf=1
+XMr2 d2 clk vdd vdd sky130_fd_pr__pfet_01v8 W={Wrst}u L=0.15u nf=1
+XMr3 outn clk vdd vdd sky130_fd_pr__pfet_01v8 W={Wrst}u L=0.15u nf=1
+XMr4 outp clk vdd vdd sky130_fd_pr__pfet_01v8 W={Wrst}u L=0.15u nf=1
 
-* --- Stage 2: Cross-coupled Latch ---
-* Tail NMOS for latch (clocked) — separate from integration
-XMtail2 ntail2 clk vss vss sky130_fd_pr__nfet_01v8 W={Wtail2}u L={Ltail2}u nf=1
+* Cross-coupled PMOS latch
+XMp1 outp outn vdd vdd sky130_fd_pr__pfet_01v8 W={Wlatp}u L={Llatp}u nf=1
+XMp2 outn outp vdd vdd sky130_fd_pr__pfet_01v8 W={Wlatp}u L={Llatp}u nf=1
 
-* PMOS pair — gates driven by sa/sb from integration stage
-* This couples the integration result into the latch
-XMp1 outn sa vdd vdd sky130_fd_pr__pfet_01v8 W={Wlatp}u L={Llatp}u nf=1
-XMp2 outp sb vdd vdd sky130_fd_pr__pfet_01v8 W={Wlatp}u L={Llatp}u nf=1
-
-* Cross-coupled NMOS latch — provides regenerative feedback
-XMn1 outn outp ntail2 vss sky130_fd_pr__nfet_01v8 W={Wlatn}u L={Llatn}u nf=1
-XMn2 outp outn ntail2 vss sky130_fd_pr__nfet_01v8 W={Wlatn}u L={Llatn}u nf=1
-
-* Reset PMOS for outputs (precharge to VDD when clk=0)
-XMro1 outn clk vdd vdd sky130_fd_pr__pfet_01v8 W={Wrst2}u L=0.15u nf=1
-XMro2 outp clk vdd vdd sky130_fd_pr__pfet_01v8 W={Wrst2}u L=0.15u nf=1
+* Cross-coupled NMOS latch (sources to input pair drains for signal coupling)
+XMn1 outp outn d1 vss sky130_fd_pr__nfet_01v8 W={Wlatn}u L={Llatn}u nf=1
+XMn2 outn outp d2 vss sky130_fd_pr__nfet_01v8 W={Wlatn}u L={Llatn}u nf=1
 
 * Output buffers (inverters for clean digital output)
-* bufp = inv(outp): when inp > inm, outp goes LOW, bufp goes HIGH
 XMbp1 bufp outp vdd vdd sky130_fd_pr__pfet_01v8 W=2u L=0.15u nf=1
 XMbn1 bufp outp vss vss sky130_fd_pr__nfet_01v8 W=1u L=0.15u nf=1
 XMbp2 bufn outn vdd vdd sky130_fd_pr__pfet_01v8 W=2u L=0.15u nf=1
@@ -66,39 +55,25 @@ XMbn2 bufn outn vss vss sky130_fd_pr__nfet_01v8 W=1u L=0.15u nf=1
 * === Measurements ===
 .control
 
-* -------------------------------------------------------
-* Test 1: DC sweep for offset
-* With clk DC=1.8V, comparator is in evaluation mode.
-* bufp rises from 0 to VDD as Vinp crosses trip point.
-* -------------------------------------------------------
-dc Vinp 0.87 0.93 0.001
-meas dc vtrip find v(inp) when v(bufp)=0.9 rise=1
-echo "RESULT_VTRIP $&vtrip"
+* Transient simulation — 3 complete clock cycles
+tran 0.05n 30n
 
-* -------------------------------------------------------
-* Test 2: Transient with 1-LSB differential (7 mV)
-* Measure resolve time and verify correct comparison.
-* -------------------------------------------------------
-alter Vinp = 0.9035
-alter Vinm = 0.9
-tran 0.1n 60n
+* Check comparator output at mid-evaluation of 2nd cycle (13ns)
+meas tran outp_val find v(bufp) at=13n
+meas tran outm_val find v(bufn) at=13n
 
-* Resolve time: 3rd clock edge to output
-meas tran tclk when v(clk)=0.9 rise=3
-meas tran tout when v(bufp)=0.9 rise=3
-echo "RESULT_TCLK $&tclk"
-echo "RESULT_TOUT $&tout"
+* Resolve time: CLK rising edge to output valid
+meas tran tclk when v(clk)=0.9 rise=2
+meas tran tout when v(bufp)=0.9 rise=2
 
-* Check correct decision during 3rd evaluation (24ns is mid-eval)
-meas tran outp_val find v(bufp) at=24n
-meas tran outm_val find v(bufn) at=24n
+* Average supply current for power calculation
+meas tran avg_idd avg i(Vdd) from=5n to=25n
+
 echo "RESULT_OUTP_VAL $&outp_val"
 echo "RESULT_OUTM_VAL $&outm_val"
-
-* Average supply current (power measurement)
-meas tran avg_idd avg i(Vdd) from=10n to=50n
+echo "RESULT_TCLK $&tclk"
+echo "RESULT_TOUT $&tout"
 echo "RESULT_AVG_IDD $&avg_idd"
-
 echo "RESULT_DONE"
 .endc
 

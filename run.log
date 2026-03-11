@@ -3,33 +3,111 @@ Design: SKY130 8-bit SAR ADC
 Parameters: 14
 Specs: 6
 
-DE: 14 params, pop=100, patience=50, workers=32
-[DE] iter    1 | best: -8.262323e+00 | no_improve:   0 | div: 0.2886 | dt: 94.748s
-[DE] iter    2 | best: -8.262323e+00 | no_improve:   1 | div: 0.2886 | dt: 94.736s
-[DE] iter    3 | best: -8.262323e+00 | no_improve:   2 | div: 0.2891 | dt: 94.735s
-[DE] iter    4 | best: -8.262323e+00 | no_improve:   3 | div: 0.2887 | dt: 94.657s
-[DE] iter    5 | best: -8.262323e+00 | no_improve:   4 | div: 0.2888 | dt: 94.816s
-[DE] iter    6 | best: -8.262323e+00 | no_improve:   5 | div: 0.2883 | dt: 94.811s
-[DE] iter    7 | best: -8.262323e+00 | no_improve:   6 | div: 0.2867 | dt: 94.750s
-[DE] iter    8 | best: -8.262323e+00 | no_improve:   7 | div: 0.2867 | dt: 94.858s
-[DE] iter    9 | best: -8.262323e+00 | no_improve:   8 | div: 0.2875 | dt: 95.050s
-[DE] iter   10 | best: -8.262323e+00 | no_improve:   9 | div: 0.2875 | dt: 94.701s
-[DE] iter   11 | best: -8.262323e+00 | no_improve:  10 | div: 0.2875 | dt: 94.939s
-[DE] iter   12 | best: -8.262323e+00 | no_improve:  11 | div: 0.2875 | dt: 94.861s
-[DE] iter   13 | best: -8.262323e+00 | no_improve:  12 | div: 0.2874 | dt: 94.790s
-[DE] iter   14 | best: -8.262323e+00 | no_improve:  13 | div: 0.2867 | dt: 94.731s
-[DE] iter   15 | best: -8.262323e+00 | no_improve:  14 | div: 0.2866 | dt: 94.866s
-[DE] iter   16 | best: -8.262323e+00 | no_improve:  15 | div: 0.2866 | dt: 94.801s
-[DE] iter   17 | best: -8.262323e+00 | no_improve:  16 | div: 0.2848 | dt: 94.585s
-[DE] iter   18 | best: -8.262323e+00 | no_improve:  17 | div: 0.2848 | dt: 94.808s
-[DE] iter   19 | best: -8.262323e+00 | no_improve:  18 | div: 0.2848 | dt: 94.658s
-[DE] iter   20 | best: -8.262323e+00 | no_improve:  19 | div: 0.2848 | dt: 94.777s
-[DE] iter   21 | best: -8.262323e+00 | no_improve:  20 | div: 0.2848 | dt: 94.687s
-[DE] iter   22 | best: -8.262323e+00 | no_improve:  21 | div: 0.2859 | dt: 94.784s
-[DE] iter   23 | best: -8.262323e+00 | no_improve:  22 | div: 0.2859 | dt: 94.703s
-[DE] iter   24 | best: -8.262323e+00 | no_improve:  23 | div: 0.2859 | dt: 94.924s
-[DE] iter   25 | best: -8.262323e+00 | no_improve:  24 | div: 0.2859 | dt: 94.834s
-[DE] iter   26 | best: -8.262323e+00 | no_improve:  25 | div: 0.2851 | dt: 94.713s
-[DE] iter   27 | best: -8.262323e+00 | no_improve:  26 | div: 0.2847 | dt: 94.845s
-[DE] iter   28 | best: -8.262323e+00 | no_improve:  27 | div: 0.2847 | dt: 94.734s
-[DE] iter   29 | best: -8.262323e+00 | no_improve:  28 | div: 0.2847 | dt: 94.678s
+DE: 14 params, pop=30, patience=10, workers=32
+[DE] iter    1 | best: 1.000000e+06 | no_improve:   0 | div: 0.2892 | dt: 30.588s
+[DE] iter    2 | best: 1.000000e+06 | no_improve:   1 | div: 0.2892 | dt: 30.323s
+[DE] iter    3 | best: 1.000000e+06 | no_improve:   2 | div: 0.2892 | dt: 30.266s
+[DE] iter    4 | best: 1.000000e+06 | no_improve:   3 | div: 0.2892 | dt: 30.283s
+[DE] iter    5 | best: 1.000000e+06 | no_improve:   4 | div: 0.2892 | dt: 30.222s
+[DE] iter    6 | best: 1.000000e+06 | no_improve:   5 | div: 0.2892 | dt: 30.220s
+[DE] iter    [DE] iter    7 | best: -8.189873e+00 | no_improve:   4 | div: 0.2889 | dt: 120.275s
+[DE] iter    8 | best: -8.189873e+00 | no_improve:   5 | div: 0.2889 | dt: 112.361s
+[DE] iter    9 | best: -8.229248e+00 | no_improve:   0 | div: 0.2887 | dt: 113.683s
+[DE] iter   10 | best: -8.229248e+00 | no_improve:   1 | div: 0.2887 | dt: 120.294s
+[DE] iter   11 | best: -8.229248e+00 | no_improve:   2 | div: 0.2887 | dt: 120.476s
+[DE] iter   12 | best: -8.229248e+00 | no_improve:   3 | div: 0.2887 | dt: 120.653s
+[DE] iter   13 | best: -8.229248e+00 | no_improve:   4 | div: 0.2887 | dt: 120.555s
+[DE] iter   14 | best: -8.229248e+00 | no_improve:   5 | div: 0.2887 | dt: 120.646s
+[DE] iter   15 | best: -8.229248e+00 | no_improve:   6 | div: 0.2887 | dt: 120.732s
+[DE] iter   16 | best: -8.229248e+00 | no_improve:   7 | div: 0.2887 | dt: 120.725s
+[DE] iter   17 | best: -8.229248e+00 | no_improve:   8 | div: 0.2887 | dt: 107.367s
+[DE] iter   18 | best: -8.229248e+00 | no_improve:   9 | div: 0.2887 | dt: 114.836s
+[DE] iter   19 | best: -8.229248e+00 | no_improve:  10 | div: 0.2887 | dt: 116.338s
+[DE] iter   20 | best: -8.229248e+00 | no_improve:  11 | div: 0.2887 | dt: 120.302s
+e+00 | no_improve:   9 | div: 0.2890 | dt: 30.174s
+[DE] iter   22 | best: -7.536437e+00 | no_improve:  10 | div: 0.2890 | dt: 30.219s
+[DE] iter   23 | best: -7.536437e+00 | no_improve:  11 | div: 0.2890 | dt: 30.141s
+[DE] iter   24 | best: -7.536437e+00 | no_improve:  12 | div: 0.2890 | dt: 30.111s
+[DE] iter   25 | best: -7.536437e+00 | no_improve:  13 | div: 0.2890 | dt: 30.139s
+[DE] iter   26 | best: -7.536437e+00 | no_improve:  14 | div: 0.2890 | dt: 30.228s
+[DE] iter   27 | best: -7.536437e+00 | no_improve:  15 | div: 0.2890 | dt: 30.192s
+[DE] iter   28 | best: -7.536437e+00 | no_improve:  16 | div: 0.2890 | dt: 30.108s
+[DE] iter   29 | best: -7.536437e+00 | no_improve:  17 | div: 0.2890 | dt: 30.212s
+[DE] iter   30 | best: -7.536437e+00 | no_improve:  18 | div: 0.2890 | dt: 30.229s
+[DE] iter   31 | best: -7.536437e+00 | no_improve:  19 | div: 0.2890 | dt: 30.185s
+[DE] iter   32 | best: -7.536437e+00 | no_improve:  20 | div: 0.2890 | dt: 30.125s
+[DE] iter   33 | best: -7.536437e+00 | no_improve:  21 | div: 0.2890 | dt: 30.194s
+[DE] iter   34 | best: -7.536437e+00 | no_improve:  22 | div: 0.2890 | dt: 30.174s
+[DE] iter   35 | best: -7.536437e+00 | no_improve:  23 | div: 0.2890 | dt: 30.170s
+[DE] iter   36 | best: -7.536437e+00 | no_improve:  24 | div: 0.2890 | dt: 30.214s
+[DE] iter   37 | best: -7.536437e+00 | no_improve:  25 | div: 0.2890 | dt: 30.282s
+[DE] iter   38 | best: -7.536437e+00 | no_improve:  26 | div: 0.2890 | dt: 30.281s
+[DE] iter   39 | best: -7.536437e+00 | no_improve:  27 | div: 0.2890 | dt: 30.302s
+[DE] iter   40 | best: -7.536437e+00 | no_improve:  28 | div: 0.2890 | dt: 30.203s
+[DE] iter   41 | best: -7.536437e+00 | no_improve:  29 | div: 0.2890 | dt: 30.273s
+[DE] iter   42 | best: -7.536437e+00 | no_improve:  30 | div: 0.2890 | dt: 30.319s
+
+============================================================
+  Stop reason:  stagnated (div=0.2890, no_improve=30)
+  Converged:    True
+  Iterations:   42
+  Best metric:  -7.536437e+00
+  Diversity:    0.2890
+  Best parameters:
+    Cload: 1.198781e+01
+    Lin: 1.330495e+00
+    Llatn: 1.487231e+00
+    Llatp: 7.097137e-01
+    Ltail1: 1.879154e-01
+    Ltail2: 4.227994e-01
+    Rsw: 2.826378e+02
+    Win: 4.673301e+01
+    Wlatn: 4.626088e+00
+    Wlatp: 2.972188e+01
+    Wrst: 3.715124e+00
+    Wrst2: 6.366785e-01
+    Wtail1: 1.564524e+01
+    Wtail2: 1.440826e+00
+============================================================
+
+
+======================================================================
+  EVALUATION REPORT — SKY130 8-bit SAR ADC
+======================================================================
+
+  Score: 0.00 / 1.00  |  Time: 1270.1s
+  DE converged: True  |  Iterations: 42  |  Diversity: 0.2890
+  Stop reason: stagnated (div=0.2890, no_improve=30)
+
+  Specs met: 0/6
+
+  Spec                            Target     Measured     Unit   Status  Score
+  -------------------------------------------------------------------------
+  resolution_bits                      8          N/A     bits     FAIL  0.00
+  sample_rate_ksps                  >100          N/A     kSPS     FAIL  0.00
+  inl_lsb                             <1          N/A      LSB     FAIL  0.00
+  dnl_lsb                           <0.5          N/A      LSB     FAIL  0.00
+  sndr_db                            >44          N/A       dB     FAIL  0.00
+  power_uw                          <500          N/A       uW     FAIL  0.00
+
+  Best Parameters:
+    Cload                = 1.1988e+01
+    Lin                  = 1.3305e+00
+    Llatn                = 1.4872e+00
+    Llatp                = 7.0971e-01
+    Ltail1               = 1.8792e-01
+    Ltail2               = 4.2280e-01
+    Rsw                  = 2.8264e+02
+    Win                  = 4.6733e+01
+    Wlatn                = 4.6261e+00
+    Wlatp                = 2.9722e+01
+    Wrst                 = 3.7151e+00
+    Wrst2                = 6.3668e-01
+    Wtail1               = 1.5645e+01
+    Wtail2               = 1.4408e+00
+
+======================================================================
+
+
+Saved: best_parameters.csv, measurements.json, plots/
+Score: 0.00 | Specs met: 0/6 | Converged: True

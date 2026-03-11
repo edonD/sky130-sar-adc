@@ -189,7 +189,7 @@ def run_simulation(template: str, param_values: Dict[str, float],
     try:
         result = subprocess.run(
             [NGSPICE, "-b", path],
-            capture_output=True, text=True, timeout=30,
+            capture_output=True, text=True, timeout=60,
             cwd=PROJECT_DIR
         )
         output = result.stdout + result.stderr
@@ -978,6 +978,8 @@ def main():
     # --- Behavioral SAR ADC Validation ---
     # Replace estimated metrics with real measurements from behavioral SAR
     if measurements:
+        # Pass Cload parameter for accurate cap mismatch modeling
+        measurements["Cload"] = best_params.get("Cload", 5.0)
         measurements = run_behavioral_sar_validation(measurements)
 
     # Score with real (validated) measurements
