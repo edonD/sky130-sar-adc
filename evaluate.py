@@ -380,6 +380,101 @@ def compute_sndr(codes, signal_bin):
     return sndr, power
 
 
+def run_power_validation(best_params):
+    """Run a proper power measurement using the full SKY130 model library.
+
+    Uses a longer simulation with multiple clock cycles to get accurate
+    average current and power measurement.
+    """
+    print("\n--- Power Validation (Full Model Library) ---")
+
+    power_netlist = """* Power validation — StrongARM comparator
+.lib "sky130_models/sky130.lib.spice" tt
+
+Vdd vdd 0 DC 1.8
+Vss vss 0 DC 0
+Vclk clk 0 PULSE(0 1.8 0 0.1n 0.1n 5n 10n)
+Vinp inp 0 DC 0.9035
+Vinm inm 0 DC 0.8965
+
+Rsw_p inp inp_c {Rsw}
+Rsw_n inm inm_c {Rsw}
+Ccdac_p inp_c vss {Cload}p
+Ccdac_n inm_c vss {Cload}p
+
+XMtail ntail clk vss vss sky130_fd_pr__nfet_01v8 W={Wtail}u L={Ltail}u nf=1
+XM1 d1 inp_c ntail vss sky130_fd_pr__nfet_01v8 W={Win}u L={Lin}u nf=1
+XM2 d2 inm_c ntail vss sky130_fd_pr__nfet_01v8 W={Win}u L={Lin}u nf=1
+XMr1 d1 clk vdd vdd sky130_fd_pr__pfet_01v8 W={Wrst}u L=0.15u nf=1
+XMr2 d2 clk vdd vdd sky130_fd_pr__pfet_01v8 W={Wrst}u L=0.15u nf=1
+XMr3 outn clk vdd vdd sky130_fd_pr__pfet_01v8 W={Wrst}u L=0.15u nf=1
+XMr4 outp clk vdd vdd sky130_fd_pr__pfet_01v8 W={Wrst}u L=0.15u nf=1
+XMp1 outp outn vdd vdd sky130_fd_pr__pfet_01v8 W={Wlatp}u L={Llatp}u nf=1
+XMp2 outn outp vdd vdd sky130_fd_pr__pfet_01v8 W={Wlatp}u L={Llatp}u nf=1
+XMn1 outp outn d1 vss sky130_fd_pr__nfet_01v8 W={Wlatn}u L={Llatn}u nf=1
+XMn2 outn outp d2 vss sky130_fd_pr__nfet_01v8 W={Wlatn}u L={Llatn}u nf=1
+XMbp1 bufp outp vdd vdd sky130_fd_pr__pfet_01v8 W=2u L=0.15u nf=1
+XMbn1 bufp outp vss vss sky130_fd_pr__nfet_01v8 W=1u L=0.15u nf=1
+XMbp2 bufn outn vdd vdd sky130_fd_pr__pfet_01v8 W=2u L=0.15u nf=1
+XMbn2 bufn outn vss vss sky130_fd_pr__nfet_01v8 W=1u L=0.15u nf=1
+
+.options reltol=0.003 method=gear
+
+.control
+tran 0.1n 60n
+meas tran avg_idd avg i(Vdd) from=10n to=50n
+meas tran outp_val find v(bufp) at=23n
+meas tran outm_val find v(bufn) at=23n
+echo "RESULT_AVG_IDD $&avg_idd"
+echo "RESULT_OUTP_VAL $&outp_val"
+echo "RESULT_OUTM_VAL $&outm_val"
+echo "RESULT_DONE"
+.endc
+.end
+"""
+
+    # Substitute parameters
+    def _replace(match):
+        key = match.group(1)
+        if key in best_params:
+            return str(best_params[key])
+        return match.group(0)
+    netlist = re.sub(r'\{(\w+)\}', _replace, power_netlist)
+
+    tmp_dir = tempfile.mkdtemp(prefix="power_val_")
+    path = os.path.join(tmp_dir, "power_val.cir")
+    with open(path, "w") as f:
+        f.write(netlist)
+
+    try:
+        result = subprocess.run(
+            [NGSPICE, "-b", path],
+            capture_output=True, text=True, timeout=120,
+            cwd=PROJECT_DIR
+        )
+        output = result.stdout + result.stderr
+    except (subprocess.TimeoutExpired, Exception) as e:
+        print(f"  Power validation failed: {e}")
+        return None
+    finally:
+        try:
+            os.unlink(path)
+            os.rmdir(tmp_dir)
+        except OSError:
+            pass
+
+    if "RESULT_DONE" not in output:
+        print("  Power validation: simulation did not complete")
+        return None
+
+    measurements = parse_ngspice_output(output)
+    avg_idd = measurements.get("RESULT_AVG_IDD", 0)
+    power_uw = abs(avg_idd) * 1.8 * 1e6
+    print(f"  avg_idd = {avg_idd:.4e} A")
+    print(f"  Power = {power_uw:.2f} uW")
+    return {"RESULT_AVG_IDD": avg_idd, "RESULT_POWER_UW": power_uw}
+
+
 def run_behavioral_sar_validation(measurements):
     """Run full behavioral SAR ADC validation using comparator characteristics.
 
@@ -974,6 +1069,14 @@ def main():
         pass
 
     measurements = final["measurements"] if not final.get("error") else {}
+
+    # Run a proper power measurement with full models and longer simulation
+    if measurements:
+        power_measurements = run_power_validation(best_params)
+        if power_measurements:
+            measurements.update(power_measurements)
+            # Recompute derived metrics with accurate power
+            measurements = compute_derived_metrics(measurements)
 
     # --- Behavioral SAR ADC Validation ---
     # Replace estimated metrics with real measurements from behavioral SAR

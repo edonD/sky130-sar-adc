@@ -3,91 +3,300 @@ Design: SKY130 8-bit SAR ADC
 Parameters: 11
 Specs: 6
 
-DE: 11 params, pop=30, patience=10, workers=32
-[DE] iter    1 | best: -8.299220e+00 | no_improve:   0 | div: 0.2891 | dt: 6.881s
-[DE] iter    2 | best: -8.299220e+00 | no_improve:   1 | div: 0.2736 | dt: 7.535s
-[DE] iter    3 | best: -8.300625e+00 | no_improve:   0 | div: 0.2671 | dt: 7.163s
-[DE] iter    4 | best: -8.300625e+00 | no_improve:   1 | div: 0.2651 | dt: 6.855s
-[DE] iter    5 | best: -8.301809e+00 | no_improve:   0 | div: 0.2519 | dt: 7.893s
-[DE] iter    6 | best: -8.301809e+00 | no_improve:   1 | div: 0.2436 | dt: 9.103s
-[DE] iter    7 | best: -8.301809e+00 | no_improve:   2 | div: 0.2326 | dt: 8.868s
-[DE] iter    8 | best: -8.301809e+00 | no_improve:   3 | div: 0.2322 | dt: 8.741s
-[DE] iter    9 | best: -8.301809e+00 | no_improve:   4 | div: 0.2075 | dt: 8.283s
-[DE] iter   10 | best: -8.301809e+00 | no_improve:   5 | div: 0.1971 | dt: 8.405s
-[DE] iter   11 | best: -8.301809e+00 | no_improve:   6 | div: 0.1926 | dt: 8.717s
-[DE] iter   12 | best: -8.301814e+00 | no_improve:   0 | div: 0.1964 | dt: 8.247s
-[DE] iter   13 | best: -8.301814e+00 | no_improve:   1 | div: 0.1954 | dt: 8.412s
-[DE] iter   14 | best: -8.301814e+00 | no_improve:   2 | div: 0.1922 | dt: 8.325s
-[DE] iter   15 | best: -8.301817e+00 | no_improve:   0 | div: 0.1956 | dt: 7.965s
-[DE] iter   16 | best: -8.301817e+00 | no_improve:   1 | div: 0.1949 | dt: 6.918s
-[DE] iter   17 | best: -8.301817e+00 | no_improve:   2 | div: 0.2016 | dt: 7.090s
-[DE] iter   18 | best: -8.301817e+00 | no_improve:   3 | div: 0.2051 | dt: 6.754s
-[DE] iter   19 | best: -8.301817e+00 | no_improve:   4 | div: 0.2068 | dt: 7.340s
-[DE] iter   20 | best: -8.301817e+00 | no_improve:   5 | div: 0.2062 | dt: 8.258s
-[DE] iter   21 | best: -8.301817e+00 | no_improve:   6 | div: 0.2069 | dt: 9.037s
-[DE] iter   22 | best: -8.301817e+00 | no_improve:   7 | div: 0.2079 | dt: 8.288s
-[DE] iter   23 | best: -8.301817e+00 | no_improve:   8 | div: 0.2111 | dt: 8.881s
-[DE] iter   24 | best: -8.301817e+00 | no_improve:   9 | div: 0.2106 | dt: 8.612s
-[DE] iter   25 | best: -8.301817e+00 | no_improve:  10 | div: 0.2121 | dt: 8.555s
-[DE] iter   26 | best: -8.301817e+00 | no_improve:  11 | div: 0.2121 | dt: 8.469s
-[DE] iter   27 | best: -8.301817e+00 | no_improve:  12 | div: 0.2098 | dt: 8.658s
-[DE] iter   28 | best: -8.301817e+00 | no_improve:  13 | div: 0.2075 | dt: 8.353s
-[DE] iter   29 | best: -8.301817e+00 | no_improve:  14 | div: 0.2075 | dt: 8.324s
-[DE] iter   30 | best: -8.301817e+00 | no_improve:  15 | div: 0.2122 | dt: 7.915s
-[DE] iter   31 | best: -8.301817e+00 | no_improve:  16 | div: 0.2126 | dt: 6.934s
-[DE] iter   32 | best: -8.301817e+00 | no_improve:  17 | div: 0.2086 | dt: 7.130s
-[DE] iter   33 | best: -8.301817e+00 | no_improve:  18 | div: 0.2107 | dt: 6.834s
-[DE] iter   34 | best: -8.301817e+00 | no_improve:  19 | div: 0.2107 | dt: 6.890s
-[DE] iter   35 | best: -8.301817e+00 | no_improve:  20 | div: 0.2099 | dt: 8.257s
-[DE] iter   36 | best: -8.301817e+00 | no_improve:  21 | div: 0.2099 | dt: 8.009s
-[DE] iter   37 | best: -8.301817e+00 | no_improve:  22 | div: 0.2099 | dt: 8.416s
-[DE] iter   38 | best: -8.301817e+00 | no_improve:  23 | div: 0.2104 | dt: 8.941s
-[DE] iter   39 | best: -8.301817e+00 | no_improve:  24 | div: 0.2069 | dt: 8.851s
-[DE] iter   40 | best: -8.301817e+00 | no_improve:  25 | div: 0.2069 | dt: 8.783s
-[DE] iter   41 | best: -8.301817e+00 | no_improve:  26 | div: 0.2080 | dt: 8.676s
-[DE] iter   42 | best: -8.301817e+00 | no_improve:  27 | div: 0.2064 | dt: 8.732s
-[DE] iter   43 | best: -8.301817e+00 | no_improve:  28 | div: 0.2071 | dt: 8.242s
-[DE] iter   44 | best: -8.301817e+00 | no_improve:  29 | div: 0.2087 | dt: 9.189s
-[DE] iter   45 | best: -8.301817e+00 | no_improve:  30 | div: 0.2087 | dt: 7.660s
+DE: 11 params, pop=60, patience=30, workers=32
+[DE] iter    1 | best: -8.301625e+00 | no_improve:   0 | div: 0.2887 | dt: 14.330s
+[DE] iter    2 | best: -8.301625e+00 | no_improve:   1 | div: 0.2757 | dt: 14.332s
+[DE] iter    3 | best: -8.301651e+00 | no_improve:   0 | div: 0.2622 | dt: 13.577s
+[DE] iter    4 | best: -8.301651e+00 | no_improve:   1 | div: 0.2574 | dt: 13.644s
+[DE] iter    5 | best: -8.301698e+00 | no_improve:   0 | div: 0.2462 | dt: 13.692s
+[DE] iter    6 | best: -8.301698e+00 | no_improve:   1 | div: 0.2416 | dt: 13.421s
+[DE] iter    7 | best: -8.301698e+00 | no_improve:   2 | div: 0.2451 | dt: 13.253s
+[DE] iter    8 | best: -8.301797e+00 | no_improve:   0 | div: 0.2386 | dt: 13.159s
+[DE] iter    9 | best: -8.301797e+00 | no_improve:   1 | div: 0.2384 | dt: 13.761s
+[DE] iter   10 | best: -8.301797e+00 | no_improve:   2 | div: 0.2282 | dt: 13.849s
+[DE] iter   11 | best: -8.301797e+00 | no_improve:   3 | div: 0.2262 | dt: 13.999s
+[DE] iter   12 | best: -8.301797e+00 | no_improve:   4 | div: 0.2223 | dt: 13.775s
+[DE] iter   13 | best: -8.301797e+00 | no_improve:   5 | div: 0.2150 | dt: 13.904s
+[DE] iter   14 | best: -8.301797e+00 | no_improve:   6 | div: 0.2101 | dt: 13.741s
+[DE] iter   15 | best: -8.301797e+00 | no_improve:   7 | div: 0.2086 | dt: 13.786s
+[DE] iter   16 | best: -8.301797e+00 | no_improve:   8 | div: 0.2086 | dt: 13.668s
+[DE] iter   17 | best: -8.301797e+00 | no_improve:   9 | div: 0.2065 | dt: 13.894s
+[DE] iter   18 | best: -8.301797e+00 | no_improve:  10 | div: 0.2058 | dt: 13.978s
+[DE] iter   19 | best: -8.301797e+00 | no_improve:  11 | div: 0.2054 | dt: 13.816s
+[DE] iter   20 | best: -8.301797e+00 | no_improve:  12 | div: 0.2069 | dt: 14.495s
+[DE] iter   21 | best: -8.301797e+00 | no_improve:  13 | div: 0.2037 | dt: 14.077s
+[DE] iter   22 | best: -8.301797e+00 | no_improve:  14 | div: 0.2016 | dt: 13.396s
+[DE] iter   23 | best: -8.301797e+00 | no_improve:  15 | div: 0.2002 | dt: 13.854s
+[DE] iter   24 | best: -8.301797e+00 | no_improve:  16 | div: 0.1982 | dt: 13.355s
+[DE] iter   25 | best: -8.301799e+00 | no_improve:   0 | div: 0.2003 | dt: 13.893s
+[DE] iter   26 | best: -8.301799e+00 | no_improve:   1 | div: 0.1993 | dt: 13.380s
+[DE] iter   27 | best: -8.301799e+00 | no_improve:   2 | div: 0.2021 | dt: 13.569s
+[DE] iter   28 | best: -8.301815e+00 | no_improve:   0 | div: 0.2050 | dt: 13.096s
+[DE] iter   29 | best: -8.301815e+00 | no_improve:   1 | div: 0.2054 | dt: 14.000s
+[DE] iter   30 | best: -8.301815e+00 | no_improve:   2 | div: 0.2062 | dt: 13.383s
+[DE] iter   31 | best: -8.301815e+00 | no_improve:   3 | div: 0.2052 | dt: 13.492s
+[DE] iter   32 | best: -8.301815e+00 | no_improve:   4 | div: 0.2051 | dt: 13.464s
+[DE] iter   33 | best: -8.301815e+00 | no_improve:   5 | div: 0.2060 | dt: 13.399s
+[DE] iter   34 | best: -8.301815e+00 | no_improve:   6 | div: 0.2049 | dt: 13.823s
+[DE] iter   35 | best: -8.301815e+00 | no_improve:   7 | div: 0.2053 | dt: 13.682s
+[DE] iter   36 | best: -8.301815e+00 | no_improve:   8 | div: 0.2045 | dt: 13.408s
+[DE] iter   37 | best: -8.301815e+00 | no_improve:   9 | div: 0.2055 | dt: 13.466s
+[DE] iter   38 | best: -8.301815e+00 | no_improve:  10 | div: 0.2051 | dt: 13.340s
+[DE] iter   39 | best: -8.301815e+00 | no_improve:  11 | div: 0.2052 | dt: 13.663s
+[DE] iter   40 | best: -8.301815e+00 | no_improve:  12 | div: 0.2048 | dt: 13.172s
+[DE] iter   41 | best: -8.301815e+00 | no_improve:  13 | div: 0.2058 | dt: 13.574s
+[DE] iter   42 | best: -8.301815e+00 | no_improve:  14 | div: 0.2054 | dt: 13.801s
+[DE] iter   43 | best: -8.301815e+00 | no_improve:  15 | div: 0.2052 | dt: 13.243s
+[DE] iter   44 | best: -8.301815e+00 | no_improve:  16 | div: 0.2041 | dt: 13.300s
+[DE] iter   45 | best: -8.301815e+00 | no_improve:  17 | div: 0.2055 | dt: 13.278s
+[DE] iter   46 | best: -8.301815e+00 | no_improve:  18 | div: 0.2055 | dt: 13.372s
+[DE] iter   47 | best: -8.301815e+00 | no_improve:  19 | div: 0.2066 | dt: 13.551s
+[DE] iter   48 | best: -8.301815e+00 | no_improve:  20 | div: 0.2044 | dt: 13.148s
+[DE] iter   49 | best: -8.301815e+00 | no_improve:  21 | div: 0.2062 | dt: 13.307s
+[DE] iter   50 | best: -8.301815e+00 | no_improve:  22 | div: 0.2055 | dt: 13.077s
+[DE] iter   51 | best: -8.301815e+00 | no_improve:  23 | div: 0.2055 | dt: 13.483s
+[DE] iter   52 | best: -8.301815e+00 | no_improve:  24 | div: 0.2039 | dt: 13.577s
+[DE] iter   53 | best: -8.301815e+00 | no_improve:  25 | div: 0.2023 | dt: 13.266s
+[DE] iter   54 | best: -8.301815e+00 | no_improve:  26 | div: 0.2009 | dt: 13.906s
+[DE] iter   55 | best: -8.301815e+00 | no_improve:  27 | div: 0.2009 | dt: 13.732s
+[DE] iter   56 | best: -8.301815e+00 | no_improve:  28 | div: 0.2032 | dt: 13.259s
+[DE] iter   57 | best: -8.301815e+00 | no_improve:  29 | div: 0.2032 | dt: 13.380s
+[DE] iter   58 | best: -8.301815e+00 | no_improve:  30 | div: 0.2036 | dt: 13.537s
+[DE] iter   59 | best: -8.301815e+00 | no_improve:  31 | div: 0.2030 | dt: 13.501s
+[DE] iter   60 | best: -8.301815e+00 | no_improve:  32 | div: 0.2030 | dt: 13.476s
+[DE] iter   61 | best: -8.301815e+00 | no_improve:  33 | div: 0.2021 | dt: 13.539s
+[DE] iter   62 | best: -8.301815e+00 | no_improve:  34 | div: 0.2021 | dt: 13.889s
+[DE] iter   63 | best: -8.301815e+00 | no_improve:  35 | div: 0.2012 | dt: 13.461s
+[DE] iter   64 | best: -8.301815e+00 | no_improve:  36 | div: 0.2013 | dt: 13.483s
+[DE] iter   65 | best: -8.301815e+00 | no_improve:  37 | div: 0.1985 | dt: 13.495s
+[DE] iter   66 | best: -8.301815e+00 | no_improve:  38 | div: 0.1972 | dt: 13.598s
+[DE] iter   67 | best: -8.301815e+00 | no_improve:  39 | div: 0.1961 | dt: 13.558s
+[DE] iter   68 | best: -8.301815e+00 | no_improve:  40 | div: 0.1961 | dt: 13.243s
+[DE] iter   69 | best: -8.301815e+00 | no_improve:  41 | div: 0.1940 | dt: 13.502s
+[DE] iter   70 | best: -8.301815e+00 | no_improve:  42 | div: 0.1940 | dt: 13.205s
+[DE] iter   71 | best: -8.301815e+00 | no_improve:  43 | div: 0.1927 | dt: 13.402s
+[DE] iter   72 | best: -8.301815e+00 | no_improve:  44 | div: 0.1927 | dt: 13.829s
+[DE] iter   73 | best: -8.301815e+00 | no_improve:  45 | div: 0.1938 | dt: 14.331s
+[DE] iter   74 | best: -8.301815e+00 | no_improve:  46 | div: 0.1936 | dt: 13.296s
+[DE] iter   75 | best: -8.301815e+00 | no_improve:  47 | div: 0.1936 | dt: 13.597s
+[DE] iter   76 | best: -8.301815e+00 | no_improve:  48 | div: 0.1921 | dt: 13.044s
+[DE] iter   77 | best: -8.301815e+00 | no_improve:  49 | div: 0.1922 | dt: 13.651s
+[DE] iter   78 | best: -8.301815e+00 | no_improve:  50 | div: 0.1917 | dt: 13.555s
+[DE] iter   79 | best: -8.301815e+00 | no_improve:  51 | div: 0.1923 | dt: 13.478s
+[DE] iter   80 | best: -8.301815e+00 | no_improve:  52 | div: 0.1923 | dt: 13.600s
+[DE] iter   81 | best: -8.301815e+00 | no_improve:  53 | div: 0.1911 | dt: 13.394s
+[DE] iter   82 | best: -8.301815e+00 | no_improve:  54 | div: 0.1889 | dt: 13.403s
+[DE] iter   83 | best: -8.301815e+00 | no_improve:  55 | div: 0.1889 | dt: 13.259s
+[DE] iter   84 | best: -8.301815e+00 | no_improve:  56 | div: 0.1876 | dt: 13.655s
+[DE] iter   85 | best: -8.301815e+00 | no_improve:  57 | div: 0.1839 | dt: 13.866s
+[DE] iter   86 | best: -8.301815e+00 | no_improve:  58 | div: 0.1843 | dt: 13.565s
+[DE] iter   87 | best: -8.301815e+00 | no_improve:  59 | div: 0.1860 | dt: 13.161s
+[DE] iter   88 | best: -8.301815e+00 | no_improve:  60 | div: 0.1860 | dt: 13.538s
+[DE] iter   89 | best: -8.301815e+00 | no_improve:  61 | div: 0.1860 | dt: 13.542s
+[DE] iter   90 | best: -8.301815e+00 | no_improve:  62 | div: 0.1860 | dt: 13.366s
+[DE] iter   91 | best: -8.301815e+00 | no_improve:  63 | div: 0.1860 | dt: 13.564s
+[DE] iter   92 | best: -8.301817e+00 | no_improve:   0 | div: 0.1855 | dt: 13.329s
+[DE] iter   93 | best: -8.301817e+00 | no_improve:   1 | div: 0.1851 | dt: 13.040s
+[DE] iter   94 | best: -8.301817e+00 | no_improve:   2 | div: 0.1820 | dt: 13.025s
+[DE] iter   95 | best: -8.301817e+00 | no_improve:   3 | div: 0.1820 | dt: 13.549s
+[DE] iter   96 | best: -8.301817e+00 | no_improve:   4 | div: 0.1820 | dt: 13.267s
+[DE] iter   97 | best: -8.301817e+00 | no_improve:   5 | div: 0.1820 | dt: 13.403s
+[DE] iter   98 | best: -8.301817e+00 | no_improve:   6 | div: 0.1820 | dt: 13.351s
+[DE] iter   99 | best: -8.301817e+00 | no_improve:   7 | div: 0.1836 | dt: 13.419s
+[DE] iter  100 | best: -8.301817e+00 | no_improve:   8 | div: 0.1836 | dt: 13.094s
+[DE] iter  101 | best: -8.301817e+00 | no_improve:   9 | div: 0.1845 | dt: 13.094s
+[DE] iter  102 | best: -8.301817e+00 | no_improve:  10 | div: 0.1845 | dt: 13.174s
+[DE] iter  103 | best: -8.301817e+00 | no_improve:  11 | div: 0.1845 | dt: 12.942s
+[DE] iter  104 | best: -8.301817e+00 | no_improve:  12 | div: 0.1842 | dt: 13.265s
+[DE] iter  105 | best: -8.301817e+00 | no_improve:  13 | div: 0.1842 | dt: 13.575s
+[DE] iter  106 | best: -8.301817e+00 | no_improve:  14 | div: 0.1845 | dt: 13.348s
+[DE] iter  107 | best: -8.301817e+00 | no_improve:  15 | div: 0.1870 | dt: 13.258s
+[DE] iter  108 | best: -8.301817e+00 | no_improve:  16 | div: 0.1881 | dt: 13.435s
+[DE] iter  109 | best: -8.301817e+00 | no_improve:  17 | div: 0.1878 | dt: 13.235s
+[DE] iter  110 | best: -8.301817e+00 | no_improve:  18 | div: 0.1866 | dt: 13.010s
+[DE] iter  111 | best: -8.301817e+00 | no_improve:  19 | div: 0.1876 | dt: 13.587s
+[DE] iter  112 | best: -8.301817e+00 | no_improve:  20 | div: 0.1833 | dt: 14.014s
+[DE] iter  113 | best: -8.301817e+00 | no_improve:  21 | div: 0.1830 | dt: 12.819s
+[DE] iter  114 | best: -8.301817e+00 | no_improve:  22 | div: 0.1830 | dt: 13.468s
+[DE] iter  115 | best: -8.301817e+00 | no_improve:  23 | div: 0.1830 | dt: 13.264s
+[DE] iter  116 | best: -8.301817e+00 | no_improve:  24 | div: 0.1830 | dt: 13.238s
+[DE] iter  117 | best: -8.301818e+00 | no_improve:   0 | div: 0.1823 | dt: 13.407s
+[DE] iter  118 | best: -8.301818e+00 | no_improve:   1 | div: 0.1796 | dt: 13.525s
+[DE] iter  119 | best: -8.301818e+00 | no_improve:   2 | div: 0.1784 | dt: 13.684s
+[DE] iter  120 | best: -8.301818e+00 | no_improve:   3 | div: 0.1784 | dt: 13.553s
+[DE] iter  121 | best: -8.301818e+00 | no_improve:   4 | div: 0.1784 | dt: 12.995s
+[DE] iter  122 | best: -8.301818e+00 | no_improve:   5 | div: 0.1780 | dt: 13.020s
+[DE] iter  123 | best: -8.301818e+00 | no_improve:   6 | div: 0.1782 | dt: 13.174s
+[DE] iter  124 | best: -8.301818e+00 | no_improve:   7 | div: 0.1783 | dt: 12.982s
+[DE] iter  125 | best: -8.301818e+00 | no_improve:   8 | div: 0.1783 | dt: 13.358s
+[DE] iter  126 | best: -8.301818e+00 | no_improve:   9 | div: 0.1789 | dt: 13.366s
+[DE] iter  127 | best: -8.301818e+00 | no_improve:  10 | div: 0.1789 | dt: 13.190s
+[DE] iter  128 | best: -8.301818e+00 | no_improve:  11 | div: 0.1793 | dt: 12.988s
+[DE] iter  129 | best: -8.301818e+00 | no_improve:  12 | div: 0.1791 | dt: 13.314s
+[DE] iter  130 | best: -8.301818e+00 | no_improve:  13 | div: 0.1799 | dt: 13.320s
+[DE] iter  131 | best: -8.301818e+00 | no_improve:  14 | div: 0.1799 | dt: 13.383s
+[DE] iter  132 | best: -8.301818e+00 | no_improve:  15 | div: 0.1799 | dt: 13.526s
+[DE] iter  133 | best: -8.301818e+00 | no_improve:  16 | div: 0.1799 | dt: 12.985s
+[DE] iter  134 | best: -8.301818e+00 | no_improve:  17 | div: 0.1799 | dt: 13.085s
+[DE] iter  135 | best: -8.301818e+00 | no_improve:  18 | div: 0.1799 | dt: 13.187s
+[DE] iter  136 | best: -8.301818e+00 | no_improve:  19 | div: 0.1799 | dt: 13.189s
+[DE] iter  137 | best: -8.301818e+00 | no_improve:  20 | div: 0.1799 | dt: 12.774s
+[DE] iter  138 | best: -8.301818e+00 | no_improve:  21 | div: 0.1809 | dt: 13.554s
+[DE] iter  139 | best: -8.301818e+00 | no_improve:  22 | div: 0.1809 | dt: 13.252s
+[DE] iter  140 | best: -8.301818e+00 | no_improve:  23 | div: 0.1810 | dt: 13.090s
+[DE] iter  141 | best: -8.301818e+00 | no_improve:  24 | div: 0.1814 | dt: 13.400s
+[DE] iter  142 | best: -8.301818e+00 | no_improve:  25 | div: 0.1814 | dt: 13.243s
+[DE] iter  143 | best: -8.301818e+00 | no_improve:  26 | div: 0.1810 | dt: 13.067s
+[DE] iter  144 | best: -8.301818e+00 | no_improve:  27 | div: 0.1810 | dt: 13.325s
+[DE] iter  145 | best: -8.301818e+00 | no_improve:  28 | div: 0.1810 | dt: 13.424s
+[DE] iter  146 | best: -8.301818e+00 | no_improve:  29 | div: 0.1810 | dt: 13.452s
+[DE] iter  147 | best: -8.301818e+00 | no_improve:  30 | div: 0.1810 | dt: 13.155s
+[DE] iter  148 | best: -8.301818e+00 | no_improve:  31 | div: 0.1810 | dt: 13.190s
+[DE] iter  149 | best: -8.301818e+00 | no_improve:  32 | div: 0.1810 | dt: 12.991s
+[DE] iter  150 | best: -8.301818e+00 | no_improve:  33 | div: 0.1810 | dt: 13.149s
+[DE] iter  151 | best: -8.301818e+00 | no_improve:  34 | div: 0.1791 | dt: 13.397s
+[DE] iter  152 | best: -8.301818e+00 | no_improve:  35 | div: 0.1791 | dt: 13.498s
+[DE] iter  153 | best: -8.301818e+00 | no_improve:  36 | div: 0.1791 | dt: 13.033s
+[DE] iter  154 | best: -8.301818e+00 | no_improve:  37 | div: 0.1788 | dt: 13.284s
+[DE] iter  155 | best: -8.301818e+00 | no_improve:  38 | div: 0.1793 | dt: 12.534s
+[DE] iter  156 | best: -8.301818e+00 | no_improve:  39 | div: 0.1785 | dt: 13.260s
+[DE] iter  157 | best: -8.301818e+00 | no_improve:  40 | div: 0.1777 | dt: 13.179s
+[DE] iter  158 | best: -8.301818e+00 | no_improve:  41 | div: 0.1777 | dt: 13.195s
+[DE] iter  159 | best: -8.301818e+00 | no_improve:  42 | div: 0.1777 | dt: 13.400s
+[DE] iter  160 | best: -8.301818e+00 | no_improve:   0 | div: 0.1781 | dt: 13.568s
+[DE] iter  161 | best: -8.301818e+00 | no_improve:   1 | div: 0.1781 | dt: 13.416s
+[DE] iter  162 | best: -8.301818e+00 | no_improve:   2 | div: 0.1781 | dt: 13.682s
+[DE] iter  163 | best: -8.301818e+00 | no_improve:   3 | div: 0.1781 | dt: 13.214s
+[DE] iter  164 | best: -8.301818e+00 | no_improve:   4 | div: 0.1789 | dt: 13.780s
+[DE] iter  165 | best: -8.301818e+00 | no_improve:   5 | div: 0.1789 | dt: 13.248s
+[DE] iter  166 | best: -8.301818e+00 | no_improve:   6 | div: 0.1789 | dt: 13.720s
+[DE] iter  167 | best: -8.301818e+00 | no_improve:   7 | div: 0.1789 | dt: 13.566s
+[DE] iter  168 | best: -8.301818e+00 | no_improve:   8 | div: 0.1789 | dt: 13.921s
+[DE] iter  169 | best: -8.301818e+00 | no_improve:   9 | div: 0.1801 | dt: 13.187s
+[DE] iter  170 | best: -8.301818e+00 | no_improve:  10 | div: 0.1799 | dt: 13.176s
+[DE] iter  171 | best: -8.301818e+00 | no_improve:  11 | div: 0.1799 | dt: 13.240s
+[DE] iter  172 | best: -8.301818e+00 | no_improve:  12 | div: 0.1798 | dt: 13.310s
+[DE] iter  173 | best: -8.301818e+00 | no_improve:  13 | div: 0.1798 | dt: 13.511s
+[DE] iter  174 | best: -8.301818e+00 | no_improve:  14 | div: 0.1794 | dt: 13.809s
+[DE] iter  175 | best: -8.301818e+00 | no_improve:  15 | div: 0.1794 | dt: 13.944s
+[DE] iter  176 | best: -8.301818e+00 | no_improve:  16 | div: 0.1794 | dt: 13.703s
+[DE] iter  177 | best: -8.301818e+00 | no_improve:  17 | div: 0.1799 | dt: 13.376s
+[DE] iter  178 | best: -8.301818e+00 | no_improve:  18 | div: 0.1831 | dt: 13.556s
+[DE] iter  179 | best: -8.301818e+00 | no_improve:  19 | div: 0.1831 | dt: 13.315s
+[DE] iter  180 | best: -8.301818e+00 | no_improve:  20 | div: 0.1835 | dt: 13.885s
+[DE] iter  181 | best: -8.301818e+00 | no_improve:  21 | div: 0.1835 | dt: 13.588s
+[DE] iter  182 | best: -8.301818e+00 | no_improve:  22 | div: 0.1835 | dt: 13.239s
+[DE] iter  183 | best: -8.301818e+00 | no_improve:  23 | div: 0.1835 | dt: 13.951s
+[DE] iter  184 | best: -8.301818e+00 | no_improve:  24 | div: 0.1835 | dt: 13.840s
+[DE] iter  185 | best: -8.301818e+00 | no_improve:  25 | div: 0.1835 | dt: 13.663s
+[DE] iter  186 | best: -8.301818e+00 | no_improve:  26 | div: 0.1835 | dt: 13.194s
+[DE] iter  187 | best: -8.301818e+00 | no_improve:  27 | div: 0.1835 | dt: 13.408s
+[DE] iter  188 | best: -8.301818e+00 | no_improve:  28 | div: 0.1835 | dt: 13.229s
+[DE] iter  189 | best: -8.301818e+00 | no_improve:  29 | div: 0.1835 | dt: 13.847s
+[DE] iter  190 | best: -8.301818e+00 | no_improve:  30 | div: 0.1835 | dt: 13.659s
+[DE] iter  191 | best: -8.301818e+00 | no_improve:  31 | div: 0.1835 | dt: 13.736s
+[DE] iter  192 | best: -8.301818e+00 | no_improve:  32 | div: 0.1835 | dt: 13.571s
+[DE] iter  193 | best: -8.301818e+00 | no_improve:  33 | div: 0.1835 | dt: 13.541s
+[DE] iter  194 | best: -8.301818e+00 | no_improve:  34 | div: 0.1835 | dt: 13.451s
+[DE] iter  195 | best: -8.301818e+00 | no_improve:  35 | div: 0.1835 | dt: 13.580s
+[DE] iter  196 | best: -8.301818e+00 | no_improve:  36 | div: 0.1821 | dt: 13.922s
+[DE] iter  197 | best: -8.301818e+00 | no_improve:  37 | div: 0.1813 | dt: 13.632s
+[DE] iter  198 | best: -8.301818e+00 | no_improve:  38 | div: 0.1813 | dt: 13.765s
+[DE] iter  199 | best: -8.301818e+00 | no_improve:  39 | div: 0.1813 | dt: 13.641s
+[DE] iter  200 | best: -8.301818e+00 | no_improve:  40 | div: 0.1815 | dt: 13.447s
+[DE] iter  201 | best: -8.301818e+00 | no_improve:  41 | div: 0.1820 | dt: 13.469s
+[DE] iter  202 | best: -8.301818e+00 | no_improve:  42 | div: 0.1820 | dt: 13.585s
+[DE] iter  203 | best: -8.301818e+00 | no_improve:  43 | div: 0.1820 | dt: 13.646s
+[DE] iter  204 | best: -8.301818e+00 | no_improve:  44 | div: 0.1812 | dt: 13.215s
+[DE] iter  205 | best: -8.301818e+00 | no_improve:  45 | div: 0.1812 | dt: 13.896s
+[DE] iter  206 | best: -8.301818e+00 | no_improve:  46 | div: 0.1812 | dt: 13.987s
+[DE] iter  207 | best: -8.301818e+00 | no_improve:  47 | div: 0.1812 | dt: 13.541s
+[DE] iter  208 | best: -8.301818e+00 | no_improve:  48 | div: 0.1812 | dt: 13.773s
+[DE] iter  209 | best: -8.301818e+00 | no_improve:  49 | div: 0.1812 | dt: 13.599s
+[DE] iter  210 | best: -8.301818e+00 | no_improve:  50 | div: 0.1812 | dt: 13.632s
+[DE] iter  211 | best: -8.301818e+00 | no_improve:  51 | div: 0.1812 | dt: 13.622s
+[DE] iter  212 | best: -8.301818e+00 | no_improve:  52 | div: 0.1807 | dt: 13.665s
+[DE] iter  213 | best: -8.301818e+00 | no_improve:  53 | div: 0.1807 | dt: 13.318s
+[DE] iter  214 | best: -8.301818e+00 | no_improve:  54 | div: 0.1807 | dt: 13.659s
+[DE] iter  215 | best: -8.301818e+00 | no_improve:  55 | div: 0.1807 | dt: 13.535s
+[DE] iter  216 | best: -8.301818e+00 | no_improve:  56 | div: 0.1807 | dt: 13.342s
+[DE] iter  217 | best: -8.301818e+00 | no_improve:  57 | div: 0.1795 | dt: 13.614s
+[DE] iter  218 | best: -8.301818e+00 | no_improve:  58 | div: 0.1798 | dt: 13.691s
+[DE] iter  219 | best: -8.301818e+00 | no_improve:  59 | div: 0.1798 | dt: 13.473s
+[DE] iter  220 | best: -8.301818e+00 | no_improve:  60 | div: 0.1798 | dt: 13.878s
+[DE] iter  221 | best: -8.301818e+00 | no_improve:  61 | div: 0.1764 | dt: 13.442s
+[DE] iter  222 | best: -8.301818e+00 | no_improve:  62 | div: 0.1764 | dt: 13.704s
+[DE] iter  223 | best: -8.301818e+00 | no_improve:  63 | div: 0.1764 | dt: 14.079s
+[DE] iter  224 | best: -8.301818e+00 | no_improve:  64 | div: 0.1766 | dt: 13.314s
+[DE] iter  225 | best: -8.301818e+00 | no_improve:  65 | div: 0.1763 | dt: 13.402s
+[DE] iter  226 | best: -8.301818e+00 | no_improve:  66 | div: 0.1763 | dt: 13.323s
+[DE] iter  227 | best: -8.301818e+00 | no_improve:  67 | div: 0.1781 | dt: 13.561s
+[DE] iter  228 | best: -8.301818e+00 | no_improve:  68 | div: 0.1770 | dt: 13.580s
+[DE] iter  229 | best: -8.301818e+00 | no_improve:  69 | div: 0.1770 | dt: 13.301s
+[DE] iter  230 | best: -8.301818e+00 | no_improve:  70 | div: 0.1770 | dt: 13.709s
+[DE] iter  231 | best: -8.301818e+00 | no_improve:  71 | div: 0.1770 | dt: 14.091s
+[DE] iter  232 | best: -8.301818e+00 | no_improve:  72 | div: 0.1770 | dt: 13.632s
+[DE] iter  233 | best: -8.301818e+00 | no_improve:  73 | div: 0.1758 | dt: 13.690s
+[DE] iter  234 | best: -8.301818e+00 | no_improve:  74 | div: 0.1758 | dt: 13.612s
+[DE] iter  235 | best: -8.301818e+00 | no_improve:  75 | div: 0.1758 | dt: 13.263s
+[DE] iter  236 | best: -8.301818e+00 | no_improve:  76 | div: 0.1758 | dt: 13.736s
+[DE] iter  237 | best: -8.301818e+00 | no_improve:  77 | div: 0.1758 | dt: 13.646s
+[DE] iter  238 | best: -8.301818e+00 | no_improve:  78 | div: 0.1748 | dt: 13.459s
+[DE] iter  239 | best: -8.301818e+00 | no_improve:  79 | div: 0.1765 | dt: 13.737s
+[DE] iter  240 | best: -8.301818e+00 | no_improve:  80 | div: 0.1765 | dt: 13.352s
+[DE] iter  241 | best: -8.301818e+00 | no_improve:  81 | div: 0.1765 | dt: 13.537s
+[DE] iter  242 | best: -8.301818e+00 | no_improve:  82 | div: 0.1765 | dt: 13.616s
+[DE] iter  243 | best: -8.301818e+00 | no_improve:  83 | div: 0.1765 | dt: 13.407s
+[DE] iter  244 | best: -8.301818e+00 | no_improve:  84 | div: 0.1751 | dt: 13.816s
+[DE] iter  245 | best: -8.301818e+00 | no_improve:  85 | div: 0.1745 | dt: 13.884s
+[DE] iter  246 | best: -8.301818e+00 | no_improve:  86 | div: 0.1745 | dt: 13.459s
+[DE] iter  247 | best: -8.301818e+00 | no_improve:  87 | div: 0.1745 | dt: 13.414s
+[DE] iter  248 | best: -8.301818e+00 | no_improve:  88 | div: 0.1745 | dt: 13.357s
+[DE] iter  249 | best: -8.301818e+00 | no_improve:  89 | div: 0.1737 | dt: 13.659s
+[DE] iter  250 | best: -8.301818e+00 | no_improve:  90 | div: 0.1747 | dt: 13.565s
 
 ============================================================
-  Stop reason:  stagnated (div=0.2087, no_improve=30)
+  Stop reason:  stagnated (div=0.1747, no_improve=90)
   Converged:    True
-  Iterations:   45
-  Best metric:  -8.301817e+00
-  Diversity:    0.2087
+  Iterations:   250
+  Best metric:  -8.301818e+00
+  Diversity:    0.1747
   Best parameters:
-    Cload: 8.071062e+00
-    Lin: 4.488006e-01
-    Llatn: 2.524897e-01
-    Llatp: 3.864906e-01
-    Ltail: 4.016259e-01
-    Rsw: 6.037343e+02
-    Win: 8.215240e+00
-    Wlatn: 2.836402e+00
-    Wlatp: 1.492868e+00
-    Wrst: 5.032863e+00
-    Wtail: 1.183468e+01
+    Cload: 1.470453e+00
+    Lin: 2.334100e-01
+    Llatn: 1.969937e-01
+    Llatp: 2.619151e-01
+    Ltail: 3.876021e-01
+    Rsw: 1.646164e+03
+    Win: 4.524731e+00
+    Wlatn: 1.644967e+00
+    Wlatp: 3.506585e+00
+    Wrst: 5.166338e+00
+    Wtail: 2.052606e+01
 ============================================================
 
+
+--- Power Validation (Full Model Library) ---
+  avg_idd = -8.3976e-06 A
+  Power = 15.12 uW
 
 --- Behavioral SAR ADC Validation ---
-  Comparator: offset=0.00 mV, resolve=0.22 ns
+  Comparator: offset=0.00 mV, resolve=0.21 ns
   Noise model: sigma=0.50 mV (71.1m LSB)
-  CDAC mismatch: unit_cap~32fF, sigma=0.63%
+  CDAC mismatch: unit_cap~10fF, sigma=1.12%
   Cap weights (ideal vs actual):
-    bit 0: ideal=1, actual=1.0031 (err=0.313%)
-    bit 1: ideal=2, actual=2.0032 (err=0.160%)
-    bit 2: ideal=4, actual=4.0166 (err=0.415%)
-    bit 3: ideal=8, actual=7.9781 (err=-0.274%)
-    bit 4: ideal=16, actual=15.9597 (err=-0.252%)
-    bit 5: ideal=32, actual=31.9697 (err=-0.095%)
-    bit 6: ideal=64, actual=64.0203 (err=0.032%)
-    bit 7: ideal=128, actual=128.0536 (err=0.042%)
+    bit 0: ideal=1, actual=1.0056 (err=0.555%)
+    bit 1: ideal=2, actual=2.0057 (err=0.285%)
+    bit 2: ideal=4, actual=4.0294 (err=0.736%)
+    bit 3: ideal=8, actual=7.9610 (err=-0.487%)
+    bit 4: ideal=16, actual=15.9284 (err=-0.447%)
+    bit 5: ideal=32, actual=31.9463 (err=-0.168%)
+    bit 6: ideal=64, actual=64.0360 (err=0.056%)
+    bit 7: ideal=128, actual=128.0952 (err=0.074%)
   Running ramp test (4096 points)...
-  Ramp test: max DNL=0.191 LSB, max INL=0.214 LSB, missing codes=0
+  Ramp test: max DNL=0.315 LSB, max INL=0.334 LSB, missing codes=0
   Running sine test (2048 samples)...
-  Sine test: SNDR=48.6 dB, ENOB=7.78 bits
+  Sine test: SNDR=48.4 dB, ENOB=7.74 bits
   Generating plots...
 --- Validation Complete ---
 
@@ -96,9 +305,9 @@ DE: 11 params, pop=30, patience=10, workers=32
   EVALUATION REPORT — SKY130 8-bit SAR ADC
 ======================================================================
 
-  Score: 1.00 / 1.00  |  Time: 364.6s
-  DE converged: True  |  Iterations: 45  |  Diversity: 0.2087
-  Stop reason: stagnated (div=0.2087, no_improve=30)
+  Score: 1.00 / 1.00  |  Time: 3371.8s
+  DE converged: True  |  Iterations: 250  |  Diversity: 0.1747
+  Stop reason: stagnated (div=0.1747, no_improve=90)
 
   Specs met: 6/6
 
@@ -106,30 +315,26 @@ DE: 11 params, pop=30, patience=10, workers=32
   -------------------------------------------------------------------------
   resolution_bits                      8        8.000     bits     PASS  1.00
   sample_rate_ksps                  >100    10000.000     kSPS     PASS  1.00
-  inl_lsb                             <1        0.214      LSB     PASS  1.00
-  dnl_lsb                           <0.5        0.191      LSB     PASS  1.00
-  sndr_db                            >44       48.575       dB     PASS  1.00
-  power_uw                          <500     8.24e-04       uW     PASS  1.00
+  inl_lsb                             <1        0.334      LSB     PASS  1.00
+  dnl_lsb                           <0.5        0.315      LSB     PASS  1.00
+  sndr_db                            >44       48.379       dB     PASS  1.00
+  power_uw                          <500       15.116       uW     PASS  1.00
 
   Best Parameters:
-    Cload                = 8.0711e+00
-    Lin                  = 4.4880e-01
-    Llatn                = 2.5249e-01
-    Llatp                = 3.8649e-01
-    Ltail                = 4.0163e-01
-    Rsw                  = 6.0373e+02
-    Win                  = 8.2152e+00
-    Wlatn                = 2.8364e+00
-    Wlatp                = 1.4929e+00
-    Wrst                 = 5.0329e+00
-    Wtail                = 1.1835e+01
+    Cload                = 1.4705e+00
+    Lin                  = 2.3341e-01
+    Llatn                = 1.9699e-01
+    Llatp                = 2.6192e-01
+    Ltail                = 3.8760e-01
+    Rsw                  = 1.6462e+03
+    Win                  = 4.5247e+00
+    Wlatn                = 1.6450e+00
+    Wlatp                = 3.5066e+00
+    Wrst                 = 5.1663e+00
+    Wtail                = 2.0526e+01
 
 ======================================================================
 
 
 Saved: best_parameters.csv, measurements.json, plots/
 Score: 1.00 | Specs met: 6/6 | Converged: True
-+00 | no_improve:  30 | div: 0.2867 | dt: 120.726s
-[DE] iter   81 | best: -8.238720e+00 | no_improve:  31 | div: 0.2867 | dt: 120.760s
-[DE] iter   82 | best: -8.238720e+00 | no_improve:  32 | div: 0.2867 | dt: 120.668s
-[DE] iter   83 | best: -8.238720e+00 | no_improve:  33 | div: 0.2865 | dt: 97.414s
