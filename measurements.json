@@ -1,28 +1,15 @@
 {
   "measurements": {
-    "Doing analysis at TEMP": 27.0,
-    "outp_val": 1.8,
-    "outm_val": 2.1483e-07,
-    "tclk": 1.05e-09,
-    "tout": 1.19736e-09,
-    "avg_idd": -2.90266e-11,
-    "RESULT_OUTP_VAL": 1.8,
-    "RESULT_OUTM_VAL": 2.1483e-07,
-    "RESULT_TCLK": 1.05e-09,
-    "RESULT_TOUT": 1.19737e-09,
-    "RESULT_AVG_IDD": -1.21079e-05,
     "RESULT_RESOLUTION_BITS": 8,
-    "RESULT_OFFSET_MV": 0.0,
-    "RESULT_RESOLVE_NS": 0.14736999999999986,
-    "RESULT_SAMPLE_RATE_KSPS": 10000,
-    "RESULT_POWER_UW": 21.79422,
-    "RESULT_INL_LSB": 0.27615601358653696,
-    "RESULT_DNL_LSB": 0.1906862745098039,
-    "RESULT_SNDR_DB": 48.555944777602065,
-    "RESULT_SENSITIVITY_OK": 1,
-    "Cload": 5.662386985087147,
+    "RESULT_SAMPLE_RATE_KSPS": 11111111111.11111,
+    "RESULT_INL_LSB": 0.41821743388836735,
+    "RESULT_DNL_LSB": 0.25367286973560194,
+    "RESULT_SNDR_DB": 47.97418568311215,
+    "RESULT_POWER_UW": 14.775255474609377,
+    "RESULT_AVG_IDD": 8.208475263671876e-06,
+    "RESULT_ENOB": 7.676775030417301,
     "RESULT_MISSING_CODES": 0,
-    "RESULT_ENOB": 7.773412753754497
+    "RESULT_MONOTONIC": 1
   },
   "score": 1.0,
   "details": {
@@ -34,35 +21,35 @@
       "unit": "bits"
     },
     "sample_rate_ksps": {
-      "measured": 10000,
+      "measured": 11111111111.11111,
       "target": ">100",
       "met": true,
       "score": 1.0,
       "unit": "kSPS"
     },
     "inl_lsb": {
-      "measured": 0.27615601358653696,
+      "measured": 0.41821743388836735,
       "target": "<1",
       "met": true,
       "score": 1.0,
       "unit": "LSB"
     },
     "dnl_lsb": {
-      "measured": 0.1906862745098039,
+      "measured": 0.25367286973560194,
       "target": "<0.5",
       "met": true,
       "score": 1.0,
       "unit": "LSB"
     },
     "sndr_db": {
-      "measured": 48.555944777602065,
+      "measured": 47.97418568311215,
       "target": ">44",
       "met": true,
       "score": 1.0,
       "unit": "dB"
     },
     "power_uw": {
-      "measured": 21.79422,
+      "measured": 14.775255474609377,
       "target": "<500",
       "met": true,
       "score": 1.0,
@@ -70,23 +57,18 @@
     }
   },
   "parameters": {
-    "Cload": 5.662386985087147,
-    "Lin": 0.500693571056335,
-    "Llatn": 0.23159814184876082,
-    "Llatp": 0.3649705730663598,
-    "Ltail": 0.1597546848847019,
-    "Rsw": 576.5939063354125,
-    "Win": 11.383700983145689,
-    "Wlatn": 1.5901046667893644,
-    "Wlatp": 2.027690232280347,
-    "Wrst": 4.312215151875927,
-    "Wtail": 65.3832158409553
+    "Cu": 0.5,
+    "Lin": 0.3,
+    "Llatn": 0.2,
+    "Llatp": 0.2,
+    "Ltail": 0.4,
+    "Win": 10.0,
+    "Wlatn": 2.0,
+    "Wlatp": 3.0,
+    "Wrst": 5.0,
+    "Wsw": 5.0,
+    "Wsw_p": 10.0,
+    "Wtail": 20.0
   },
-  "de_result": {
-    "converged": true,
-    "iterations": 114,
-    "diversity": 0.18074009506570946,
-    "stop_reason": "stagnated (div=0.1807, no_improve=90)",
-    "best_metric": -8.301818077322423
-  }
+  "de_result": {}
 }

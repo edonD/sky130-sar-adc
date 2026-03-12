@@ -1,77 +1,237 @@
-* SKY130 SAR ADC — StrongARM Latch Comparator
-* Classic StrongARM topology: input pair + cross-coupled inverter latch
+* SKY130 8-bit SAR ADC — Complete Design
+* StrongARM comparator (transistor-level) + binary-weighted CDAC + behavioral SAR logic
+*
+* Architecture: Single-ended charge-redistribution SAR ADC
+* - Bottom-plate sampling at Vcm
+* - Binary-weighted capacitor array (C0=Cu to C7=128*Cu + 1*Cu dummy)
+* - StrongARM latch comparator (transistor-level, SKY130)
+* - Behavioral SAR logic (B sources with RC latches)
+*
+* Conversion algorithm (SUBTRACT from Vref):
+*   1. Sample: close S_samp, all bottom plates to Vcm. vtop = Vin.
+*   2. Hold:  open S_samp, switch all bottoms to Vref(1.8V).
+*             vtop = Vin + (Vref-Vcm) = Vin + 0.9V
+*   3. Bit7:  switch bot7 from Vref to GND. vtop -= 128/256 * Vref = 0.9V
+*             vtop = Vin. Compare vtop to Vcm: vtop > Vcm means bit7=1
+*   4. Continue MSB to LSB...
 
 .lib "sky130_models/sky130_minimal.lib.spice" tt
 
-* Supply
+* ======================================================================
+* SUPPLY AND REFERENCES
+* ======================================================================
 Vdd vdd 0 DC 1.8
 Vss vss 0 DC 0
+Vref vref 0 DC 1.8
+Vcm_src vcm 0 DC 0.9
 
-* Clock — single evaluation pulse
-Vclk clk 0 PULSE(0 1.8 1n 0.1n 0.1n 10n 20n)
+* ======================================================================
+* INPUT SIGNAL
+* ======================================================================
+.param vin_dc=0.9
+Vin vin_node 0 DC {vin_dc}
 
-* Differential input: +1 LSB differential (7mV)
-Vinp inp 0 DC 0.9035
-Vinm inm 0 DC 0.8965
+* ======================================================================
+* TIMING
+* ======================================================================
+.param Tsample=10n
+.param Tbit=10n
 
-* === CDAC Loading Model ===
-Rsw_p inp inp_c {Rsw}
-Rsw_n inm inm_c {Rsw}
-Ccdac_p inp_c vss {Cload}p
-Ccdac_n inm_c vss {Cload}p
+* Sample clock: high during sampling
+Vsamp samp 0 PULSE(1.8 0 {Tsample} 0.1n 0.1n 200n 400n)
+Bsamp_b samp_b 0 V = 1.8 - v(samp)
 
-* === StrongARM Latch Comparator ===
+* Comparator clock: fires 4ns into each bit phase, high for 4ns
+Vclk comp_clk 0 PULSE(0 1.8 {Tsample+4.5n} 0.1n 0.1n 3.8n {Tbit})
 
-* Tail NMOS (clocked — enables current during evaluation)
-XMtail ntail clk vss vss sky130_fd_pr__nfet_01v8 W={Wtail}u L={Ltail}u nf=1
+* Phase clocks for each bit (MSB first, 10ns each)
+Vph7 ph7 0 PULSE(0 1.8 {Tsample+0.5n} 0.1n 0.1n 9.3n 200n)
+Vph6 ph6 0 PULSE(0 1.8 {Tsample+Tbit+0.5n} 0.1n 0.1n 9.3n 200n)
+Vph5 ph5 0 PULSE(0 1.8 {Tsample+2*Tbit+0.5n} 0.1n 0.1n 9.3n 200n)
+Vph4 ph4 0 PULSE(0 1.8 {Tsample+3*Tbit+0.5n} 0.1n 0.1n 9.3n 200n)
+Vph3 ph3 0 PULSE(0 1.8 {Tsample+4*Tbit+0.5n} 0.1n 0.1n 9.3n 200n)
+Vph2 ph2 0 PULSE(0 1.8 {Tsample+5*Tbit+0.5n} 0.1n 0.1n 9.3n 200n)
+Vph1 ph1 0 PULSE(0 1.8 {Tsample+6*Tbit+0.5n} 0.1n 0.1n 9.3n 200n)
+Vph0 ph0 0 PULSE(0 1.8 {Tsample+7*Tbit+0.5n} 0.1n 0.1n 9.3n 200n)
 
-* Input differential pair (NMOS)
-XM1 d1 inp_c ntail vss sky130_fd_pr__nfet_01v8 W={Win}u L={Lin}u nf=1
-XM2 d2 inm_c ntail vss sky130_fd_pr__nfet_01v8 W={Win}u L={Lin}u nf=1
+* ======================================================================
+* SAMPLING SWITCH (CMOS TG, transistor-level)
+* ======================================================================
+* Pin order: D G S B
+XMsw_n vin_node samp vtop vss sky130_fd_pr__nfet_01v8 W={Wsw}u L=0.15u nf=1
+XMsw_p vin_node samp_b vtop vdd sky130_fd_pr__pfet_01v8 W={Wsw_p}u L=0.15u nf=1
 
-* Reset PMOS (precharge all internal nodes to VDD when CLK=0)
-XMr1 d1 clk vdd vdd sky130_fd_pr__pfet_01v8 W={Wrst}u L=0.15u nf=1
-XMr2 d2 clk vdd vdd sky130_fd_pr__pfet_01v8 W={Wrst}u L=0.15u nf=1
-XMr3 outn clk vdd vdd sky130_fd_pr__pfet_01v8 W={Wrst}u L=0.15u nf=1
-XMr4 outp clk vdd vdd sky130_fd_pr__pfet_01v8 W={Wrst}u L=0.15u nf=1
+* ======================================================================
+* BINARY-WEIGHTED CDAC
+* ======================================================================
+.param cup={Cu}p
 
-* Cross-coupled PMOS latch
+C7 vtop bot7 {128*cup}
+C6 vtop bot6 {64*cup}
+C5 vtop bot5 {32*cup}
+C4 vtop bot4 {16*cup}
+C3 vtop bot3 {8*cup}
+C2 vtop bot2 {4*cup}
+C1 vtop bot1 {2*cup}
+C0 vtop bot0 {cup}
+Clsb vtop botlsb {cup}
+
+* ======================================================================
+* BOTTOM-PLATE SWITCHES (ideal voltage-controlled switches)
+* ======================================================================
+* 3 switches per bit: vcm (sample), vref (default/bit=0), gnd (trial/bit=1)
+.model swmod SW(Vt=0.9 Vh=0.1 Ron=10 Roff=1G)
+
+S7vcm bot7 vcm sw_vcm7 0 swmod
+S7ref bot7 vref sw_ref7 0 swmod
+S7gnd bot7 vss sw_gnd7 0 swmod
+S6vcm bot6 vcm sw_vcm6 0 swmod
+S6ref bot6 vref sw_ref6 0 swmod
+S6gnd bot6 vss sw_gnd6 0 swmod
+S5vcm bot5 vcm sw_vcm5 0 swmod
+S5ref bot5 vref sw_ref5 0 swmod
+S5gnd bot5 vss sw_gnd5 0 swmod
+S4vcm bot4 vcm sw_vcm4 0 swmod
+S4ref bot4 vref sw_ref4 0 swmod
+S4gnd bot4 vss sw_gnd4 0 swmod
+S3vcm bot3 vcm sw_vcm3 0 swmod
+S3ref bot3 vref sw_ref3 0 swmod
+S3gnd bot3 vss sw_gnd3 0 swmod
+S2vcm bot2 vcm sw_vcm2 0 swmod
+S2ref bot2 vref sw_ref2 0 swmod
+S2gnd bot2 vss sw_gnd2 0 swmod
+S1vcm bot1 vcm sw_vcm1 0 swmod
+S1ref bot1 vref sw_ref1 0 swmod
+S1gnd bot1 vss sw_gnd1 0 swmod
+S0vcm bot0 vcm sw_vcm0 0 swmod
+S0ref bot0 vref sw_ref0 0 swmod
+S0gnd bot0 vss sw_gnd0 0 swmod
+
+* LSB dummy cap — always Vcm during sample, Vref after hold
+Slvcm botlsb vcm sw_vcml 0 swmod
+Slref botlsb vref sw_refl 0 swmod
+
+* ======================================================================
+* SWITCH CONTROL LOGIC
+* ======================================================================
+* vcm: ON during sample only
+Bvcm7 sw_vcm7 0 V = v(samp) > 0.9 ? 1.8 : 0
+Bvcm6 sw_vcm6 0 V = v(samp) > 0.9 ? 1.8 : 0
+Bvcm5 sw_vcm5 0 V = v(samp) > 0.9 ? 1.8 : 0
+Bvcm4 sw_vcm4 0 V = v(samp) > 0.9 ? 1.8 : 0
+Bvcm3 sw_vcm3 0 V = v(samp) > 0.9 ? 1.8 : 0
+Bvcm2 sw_vcm2 0 V = v(samp) > 0.9 ? 1.8 : 0
+Bvcm1 sw_vcm1 0 V = v(samp) > 0.9 ? 1.8 : 0
+Bvcm0 sw_vcm0 0 V = v(samp) > 0.9 ? 1.8 : 0
+Bvcml sw_vcml 0 V = v(samp) > 0.9 ? 1.8 : 0
+Brefl sw_refl 0 V = v(samp) > 0.9 ? 0 : 1.8
+
+* gnd: ON when NOT sample AND (trial phase OR bit=1) — subtracts from vtop
+Bgnd7 sw_gnd7 0 V = v(samp) > 0.9 ? 0 : (max(v(ph7),v(bit7_h)) > 0.9 ? 1.8 : 0)
+Bgnd6 sw_gnd6 0 V = v(samp) > 0.9 ? 0 : (max(v(ph6),v(bit6_h)) > 0.9 ? 1.8 : 0)
+Bgnd5 sw_gnd5 0 V = v(samp) > 0.9 ? 0 : (max(v(ph5),v(bit5_h)) > 0.9 ? 1.8 : 0)
+Bgnd4 sw_gnd4 0 V = v(samp) > 0.9 ? 0 : (max(v(ph4),v(bit4_h)) > 0.9 ? 1.8 : 0)
+Bgnd3 sw_gnd3 0 V = v(samp) > 0.9 ? 0 : (max(v(ph3),v(bit3_h)) > 0.9 ? 1.8 : 0)
+Bgnd2 sw_gnd2 0 V = v(samp) > 0.9 ? 0 : (max(v(ph2),v(bit2_h)) > 0.9 ? 1.8 : 0)
+Bgnd1 sw_gnd1 0 V = v(samp) > 0.9 ? 0 : (max(v(ph1),v(bit1_h)) > 0.9 ? 1.8 : 0)
+Bgnd0 sw_gnd0 0 V = v(samp) > 0.9 ? 0 : (max(v(ph0),v(bit0_h)) > 0.9 ? 1.8 : 0)
+
+* vref: ON when NOT sample AND NOT (trial OR bit=1) — default state
+Bref7 sw_ref7 0 V = v(samp) > 0.9 ? 0 : (max(v(ph7),v(bit7_h)) > 0.9 ? 0 : 1.8)
+Bref6 sw_ref6 0 V = v(samp) > 0.9 ? 0 : (max(v(ph6),v(bit6_h)) > 0.9 ? 0 : 1.8)
+Bref5 sw_ref5 0 V = v(samp) > 0.9 ? 0 : (max(v(ph5),v(bit5_h)) > 0.9 ? 0 : 1.8)
+Bref4 sw_ref4 0 V = v(samp) > 0.9 ? 0 : (max(v(ph4),v(bit4_h)) > 0.9 ? 0 : 1.8)
+Bref3 sw_ref3 0 V = v(samp) > 0.9 ? 0 : (max(v(ph3),v(bit3_h)) > 0.9 ? 0 : 1.8)
+Bref2 sw_ref2 0 V = v(samp) > 0.9 ? 0 : (max(v(ph2),v(bit2_h)) > 0.9 ? 0 : 1.8)
+Bref1 sw_ref1 0 V = v(samp) > 0.9 ? 0 : (max(v(ph1),v(bit1_h)) > 0.9 ? 0 : 1.8)
+Bref0 sw_ref0 0 V = v(samp) > 0.9 ? 0 : (max(v(ph0),v(bit0_h)) > 0.9 ? 0 : 1.8)
+
+* ======================================================================
+* STRONGARM LATCH COMPARATOR (transistor-level, SKY130)
+* ======================================================================
+* Positive input: vtop, Negative input: vcm
+XMtail ntail comp_clk vss vss sky130_fd_pr__nfet_01v8 W={Wtail}u L={Ltail}u nf=1
+XM1 d1 vtop ntail vss sky130_fd_pr__nfet_01v8 W={Win}u L={Lin}u nf=1
+XM2 d2 vcm ntail vss sky130_fd_pr__nfet_01v8 W={Win}u L={Lin}u nf=1
+XMr1 d1 comp_clk vdd vdd sky130_fd_pr__pfet_01v8 W={Wrst}u L=0.15u nf=1
+XMr2 d2 comp_clk vdd vdd sky130_fd_pr__pfet_01v8 W={Wrst}u L=0.15u nf=1
+XMr3 outn comp_clk vdd vdd sky130_fd_pr__pfet_01v8 W={Wrst}u L=0.15u nf=1
+XMr4 outp comp_clk vdd vdd sky130_fd_pr__pfet_01v8 W={Wrst}u L=0.15u nf=1
 XMp1 outp outn vdd vdd sky130_fd_pr__pfet_01v8 W={Wlatp}u L={Llatp}u nf=1
 XMp2 outn outp vdd vdd sky130_fd_pr__pfet_01v8 W={Wlatp}u L={Llatp}u nf=1
-
-* Cross-coupled NMOS latch (sources to input pair drains for signal coupling)
 XMn1 outp outn d1 vss sky130_fd_pr__nfet_01v8 W={Wlatn}u L={Llatn}u nf=1
 XMn2 outn outp d2 vss sky130_fd_pr__nfet_01v8 W={Wlatn}u L={Llatn}u nf=1
 
-* Output buffers (inverters for clean digital output)
+* Output buffers (inverters)
 XMbp1 bufp outp vdd vdd sky130_fd_pr__pfet_01v8 W=2u L=0.15u nf=1
 XMbn1 bufp outp vss vss sky130_fd_pr__nfet_01v8 W=1u L=0.15u nf=1
 XMbp2 bufn outn vdd vdd sky130_fd_pr__pfet_01v8 W=2u L=0.15u nf=1
 XMbn2 bufn outn vss vss sky130_fd_pr__nfet_01v8 W=1u L=0.15u nf=1
 
-.options reltol=0.05 method=gear maxord=2
+* Latched comparator decision (holds value when comp_clk goes low)
+* vtop > vcm → outp LOW → bufp HIGH → bit=1
+Bcomp_latch comp_l_pre 0 V = v(comp_clk) > 0.9 ? (v(bufp) > 0.9 ? 1.8 : 0) : v(comp_l_h)
+Rcl comp_l_pre comp_l_h 1
+Ccl comp_l_h 0 0.1p IC=0
 
-* === Measurements ===
+* ======================================================================
+* SAR LOGIC (Behavioral — B sources with RC latches)
+* ======================================================================
+Bbit7 bit7_pre 0 V = v(samp) > 0.9 ? 0 : (v(ph7) > 0.9 ? v(comp_l_h) : v(bit7_h))
+Rh7 bit7_pre bit7_h 1
+Ch7 bit7_h 0 1p IC=0
+Bbit6 bit6_pre 0 V = v(samp) > 0.9 ? 0 : (v(ph6) > 0.9 ? v(comp_l_h) : v(bit6_h))
+Rh6 bit6_pre bit6_h 1
+Ch6 bit6_h 0 1p IC=0
+Bbit5 bit5_pre 0 V = v(samp) > 0.9 ? 0 : (v(ph5) > 0.9 ? v(comp_l_h) : v(bit5_h))
+Rh5 bit5_pre bit5_h 1
+Ch5 bit5_h 0 1p IC=0
+Bbit4 bit4_pre 0 V = v(samp) > 0.9 ? 0 : (v(ph4) > 0.9 ? v(comp_l_h) : v(bit4_h))
+Rh4 bit4_pre bit4_h 1
+Ch4 bit4_h 0 1p IC=0
+Bbit3 bit3_pre 0 V = v(samp) > 0.9 ? 0 : (v(ph3) > 0.9 ? v(comp_l_h) : v(bit3_h))
+Rh3 bit3_pre bit3_h 1
+Ch3 bit3_h 0 1p IC=0
+Bbit2 bit2_pre 0 V = v(samp) > 0.9 ? 0 : (v(ph2) > 0.9 ? v(comp_l_h) : v(bit2_h))
+Rh2 bit2_pre bit2_h 1
+Ch2 bit2_h 0 1p IC=0
+Bbit1 bit1_pre 0 V = v(samp) > 0.9 ? 0 : (v(ph1) > 0.9 ? v(comp_l_h) : v(bit1_h))
+Rh1 bit1_pre bit1_h 1
+Ch1 bit1_h 0 1p IC=0
+Bbit0 bit0_pre 0 V = v(samp) > 0.9 ? 0 : (v(ph0) > 0.9 ? v(comp_l_h) : v(bit0_h))
+Rh0 bit0_pre bit0_h 1
+Ch0 bit0_h 0 1p IC=0
+
+* ======================================================================
+* SIMULATION
+* ======================================================================
+.options method=gear reltol=0.005
+
 .control
+tran 0.1n 95n
 
-* Short transient — 1ns precharge then evaluation
-tran 0.5n 10n
+* Measure final bit values at end of conversion (t=89ns)
+meas tran bit7_val find v(bit7_h) at=89n
+meas tran bit6_val find v(bit6_h) at=89n
+meas tran bit5_val find v(bit5_h) at=89n
+meas tran bit4_val find v(bit4_h) at=89n
+meas tran bit3_val find v(bit3_h) at=89n
+meas tran bit2_val find v(bit2_h) at=89n
+meas tran bit1_val find v(bit1_h) at=89n
+meas tran bit0_val find v(bit0_h) at=89n
 
-* Check comparator output at mid-evaluation (6ns after CLK rises at 1ns)
-meas tran outp_val find v(bufp) at=7n
-meas tran outm_val find v(bufn) at=7n
+* Measure supply current
+meas tran avg_idd avg i(Vdd) from=0 to=90n
 
-* Resolve time: CLK rising edge to output valid
-meas tran tclk when v(clk)=0.9 rise=1
-meas tran tout when v(bufp)=0.9 rise=1
-
-* Average supply current for power calculation
-meas tran avg_idd avg i(Vdd) from=1n to=10n
-
-echo "RESULT_OUTP_VAL $&outp_val"
-echo "RESULT_OUTM_VAL $&outm_val"
-echo "RESULT_TCLK $&tclk"
-echo "RESULT_TOUT $&tout"
+* Output results
+echo "RESULT_BIT7 $&bit7_val"
+echo "RESULT_BIT6 $&bit6_val"
+echo "RESULT_BIT5 $&bit5_val"
+echo "RESULT_BIT4 $&bit4_val"
+echo "RESULT_BIT3 $&bit3_val"
+echo "RESULT_BIT2 $&bit2_val"
+echo "RESULT_BIT1 $&bit1_val"
+echo "RESULT_BIT0 $&bit0_val"
 echo "RESULT_AVG_IDD $&avg_idd"
 echo "RESULT_DONE"
 .endc

@@ -8,5 +8,6 @@ Llatn,0.15,0.5,log
 Wtail,2,80,log
 Ltail,0.15,1,log
 Wrst,1,15,log
-Rsw,100,2000,log
-Cload,1,15,log
+Cu,0.02,0.5,log
+Wsw,1,20,log
+Wsw_p,1,40,log
