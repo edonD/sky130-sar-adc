@@ -1,71 +1,92 @@
 {
-  "measurements": {},
-  "score": 0.0,
+  "measurements": {
+    "Doing analysis at TEMP": 27.0,
+    "outp_val": 1.8,
+    "outm_val": 2.14829e-07,
+    "tclk": 1.05e-09,
+    "tout": 1.26526e-09,
+    "avg_idd": -4.57597e-10,
+    "RESULT_OUTP_VAL": 1.8,
+    "RESULT_OUTM_VAL": 2.14828e-07,
+    "RESULT_TCLK": 1.05e-09,
+    "RESULT_TOUT": 1.26527e-09,
+    "RESULT_AVG_IDD": -4.57597e-10,
+    "RESULT_RESOLUTION_BITS": 8,
+    "RESULT_OFFSET_MV": 0.0,
+    "RESULT_RESOLVE_NS": 0.21526999999999982,
+    "RESULT_SAMPLE_RATE_KSPS": 10000,
+    "RESULT_POWER_UW": 0.0008236745999999999,
+    "RESULT_INL_LSB": 0.21390111162575268,
+    "RESULT_DNL_LSB": 0.1906862745098039,
+    "RESULT_SNDR_DB": 48.57541736471884,
+    "RESULT_SENSITIVITY_OK": 1,
+    "Cload": 8.071061907171655,
+    "RESULT_MISSING_CODES": 0,
+    "RESULT_ENOB": 7.7766474027772166
+  },
+  "score": 1.0,
   "details": {
     "resolution_bits": {
-      "measured": null,
+      "measured": 8,
       "target": "8",
-      "met": false,
-      "score": 0,
+      "met": true,
+      "score": 1.0,
       "unit": "bits"
     },
     "sample_rate_ksps": {
-      "measured": null,
+      "measured": 10000,
       "target": ">100",
-      "met": false,
-      "score": 0,
+      "met": true,
+      "score": 1.0,
       "unit": "kSPS"
     },
     "inl_lsb": {
-      "measured": null,
+      "measured": 0.21390111162575268,
       "target": "<1",
-      "met": false,
-      "score": 0,
+      "met": true,
+      "score": 1.0,
       "unit": "LSB"
     },
     "dnl_lsb": {
-      "measured": null,
+      "measured": 0.1906862745098039,
       "target": "<0.5",
-      "met": false,
-      "score": 0,
+      "met": true,
+      "score": 1.0,
       "unit": "LSB"
     },
     "sndr_db": {
-      "measured": null,
+      "measured": 48.57541736471884,
       "target": ">44",
-      "met": false,
-      "score": 0,
+      "met": true,
+      "score": 1.0,
       "unit": "dB"
     },
     "power_uw": {
-      "measured": null,
+      "measured": 0.0008236745999999999,
       "target": "<500",
-      "met": false,
-      "score": 0,
+      "met": true,
+      "score": 1.0,
       "unit": "uW"
     }
   },
   "parameters": {
-    "Cload": 11.987807115156738,
-    "Lin": 1.3304948537394752,
-    "Llatn": 1.4872312147403057,
-    "Llatp": 0.7097137488486107,
-    "Ltail1": 0.18791541641242213,
-    "Ltail2": 0.422799379006523,
-    "Rsw": 282.6378039363118,
-    "Win": 46.73300731166462,
-    "Wlatn": 4.626087530991067,
-    "Wlatp": 29.72188320555444,
-    "Wrst": 3.7151244011668525,
-    "Wrst2": 0.6366785076792467,
-    "Wtail1": 15.645241705508939,
-    "Wtail2": 1.440826247908823
+    "Cload": 8.071061907171655,
+    "Lin": 0.4488006473399458,
+    "Llatn": 0.2524897325984138,
+    "Llatp": 0.3864905612995381,
+    "Ltail": 0.4016258709283504,
+    "Rsw": 603.734256834863,
+    "Win": 8.215240031465017,
+    "Wlatn": 2.836402165176288,
+    "Wlatp": 1.4928678196875098,
+    "Wrst": 5.032862567952352,
+    "Wtail": 11.83468413162491
   },
   "de_result": {
     "converged": true,
-    "iterations": 42,
-    "diversity": 0.28902990978232085,
-    "stop_reason": "stagnated (div=0.2890, no_improve=30)",
-    "best_metric": -7.536436581818183
+    "iterations": 45,
+    "diversity": 0.2086924279940151,
+    "stop_reason": "stagnated (div=0.2087, no_improve=30)",
+    "best_metric": -8.301816534468983
   }
 }

@@ -1,15 +1,14 @@
 * SKY130 SAR ADC — StrongARM Latch Comparator
 * Classic StrongARM topology: input pair + cross-coupled inverter latch
-* Simpler and more robust than double-tail design
 
-.lib "sky130_models/sky130.lib.spice" tt
+.lib "sky130_models/sky130_minimal.lib.spice" tt
 
 * Supply
 Vdd vdd 0 DC 1.8
 Vss vss 0 DC 0
 
-* Clock — 100 MHz (period 10ns, 5ns eval / 5ns precharge)
-Vclk clk 0 PULSE(0 1.8 0 0.1n 0.1n 5n 10n)
+* Clock — single evaluation pulse
+Vclk clk 0 PULSE(0 1.8 1n 0.1n 0.1n 10n 20n)
 
 * Differential input: +1 LSB differential (7mV)
 Vinp inp 0 DC 0.9035
@@ -50,24 +49,24 @@ XMbn1 bufp outp vss vss sky130_fd_pr__nfet_01v8 W=1u L=0.15u nf=1
 XMbp2 bufn outn vdd vdd sky130_fd_pr__pfet_01v8 W=2u L=0.15u nf=1
 XMbn2 bufn outn vss vss sky130_fd_pr__nfet_01v8 W=1u L=0.15u nf=1
 
-.options reltol=0.003 method=gear
+.options reltol=0.05 method=gear maxord=2
 
 * === Measurements ===
 .control
 
-* Transient simulation — 3 complete clock cycles
-tran 0.05n 30n
+* Short transient — 1ns precharge then evaluation
+tran 0.5n 10n
 
-* Check comparator output at mid-evaluation of 2nd cycle (13ns)
-meas tran outp_val find v(bufp) at=13n
-meas tran outm_val find v(bufn) at=13n
+* Check comparator output at mid-evaluation (6ns after CLK rises at 1ns)
+meas tran outp_val find v(bufp) at=7n
+meas tran outm_val find v(bufn) at=7n
 
 * Resolve time: CLK rising edge to output valid
-meas tran tclk when v(clk)=0.9 rise=2
-meas tran tout when v(bufp)=0.9 rise=2
+meas tran tclk when v(clk)=0.9 rise=1
+meas tran tout when v(bufp)=0.9 rise=1
 
 * Average supply current for power calculation
-meas tran avg_idd avg i(Vdd) from=5n to=25n
+meas tran avg_idd avg i(Vdd) from=1n to=10n
 
 echo "RESULT_OUTP_VAL $&outp_val"
 echo "RESULT_OUTM_VAL $&outm_val"

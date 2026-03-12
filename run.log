@@ -1,113 +1,135 @@
 Loading design...
 Design: SKY130 8-bit SAR ADC
-Parameters: 14
+Parameters: 11
 Specs: 6
 
-DE: 14 params, pop=30, patience=10, workers=32
-[DE] iter    1 | best: 1.000000e+06 | no_improve:   0 | div: 0.2892 | dt: 30.588s
-[DE] iter    2 | best: 1.000000e+06 | no_improve:   1 | div: 0.2892 | dt: 30.323s
-[DE] iter    3 | best: 1.000000e+06 | no_improve:   2 | div: 0.2892 | dt: 30.266s
-[DE] iter    4 | best: 1.000000e+06 | no_improve:   3 | div: 0.2892 | dt: 30.283s
-[DE] iter    5 | best: 1.000000e+06 | no_improve:   4 | div: 0.2892 | dt: 30.222s
-[DE] iter    6 | best: 1.000000e+06 | no_improve:   5 | div: 0.2892 | dt: 30.220s
-[DE] iter    [DE] iter    7 | best: -8.189873e+00 | no_improve:   4 | div: 0.2889 | dt: 120.275s
-[DE] iter    8 | best: -8.189873e+00 | no_improve:   5 | div: 0.2889 | dt: 112.361s
-[DE] iter    9 | best: -8.229248e+00 | no_improve:   0 | div: 0.2887 | dt: 113.683s
-[DE] iter   10 | best: -8.229248e+00 | no_improve:   1 | div: 0.2887 | dt: 120.294s
-[DE] iter   11 | best: -8.229248e+00 | no_improve:   2 | div: 0.2887 | dt: 120.476s
-[DE] iter   12 | best: -8.229248e+00 | no_improve:   3 | div: 0.2887 | dt: 120.653s
-[DE] iter   13 | best: -8.229248e+00 | no_improve:   4 | div: 0.2887 | dt: 120.555s
-[DE] iter   14 | best: -8.229248e+00 | no_improve:   5 | div: 0.2887 | dt: 120.646s
-[DE] iter   15 | best: -8.229248e+00 | no_improve:   6 | div: 0.2887 | dt: 120.732s
-[DE] iter   16 | best: -8.229248e+00 | no_improve:   7 | div: 0.2887 | dt: 120.725s
-[DE] iter   17 | best: -8.229248e+00 | no_improve:   8 | div: 0.2887 | dt: 107.367s
-[DE] iter   18 | best: -8.229248e+00 | no_improve:   9 | div: 0.2887 | dt: 114.836s
-[DE] iter   19 | best: -8.229248e+00 | no_improve:  10 | div: 0.2887 | dt: 116.338s
-[DE] iter   20 | best: -8.229248e+00 | no_improve:  11 | div: 0.2887 | dt: 120.302s
-e+00 | no_improve:   9 | div: 0.2890 | dt: 30.174s
-[DE] iter   22 | best: -7.536437e+00 | no_improve:  10 | div: 0.2890 | dt: 30.219s
-[DE] iter   23 | best: -7.536437e+00 | no_improve:  11 | div: 0.2890 | dt: 30.141s
-[DE] iter   24 | best: -7.536437e+00 | no_improve:  12 | div: 0.2890 | dt: 30.111s
-[DE] iter   25 | best: -7.536437e+00 | no_improve:  13 | div: 0.2890 | dt: 30.139s
-[DE] iter   26 | best: -7.536437e+00 | no_improve:  14 | div: 0.2890 | dt: 30.228s
-[DE] iter   27 | best: -7.536437e+00 | no_improve:  15 | div: 0.2890 | dt: 30.192s
-[DE] iter   28 | best: -7.536437e+00 | no_improve:  16 | div: 0.2890 | dt: 30.108s
-[DE] iter   29 | best: -7.536437e+00 | no_improve:  17 | div: 0.2890 | dt: 30.212s
-[DE] iter   30 | best: -7.536437e+00 | no_improve:  18 | div: 0.2890 | dt: 30.229s
-[DE] iter   31 | best: -7.536437e+00 | no_improve:  19 | div: 0.2890 | dt: 30.185s
-[DE] iter   32 | best: -7.536437e+00 | no_improve:  20 | div: 0.2890 | dt: 30.125s
-[DE] iter   33 | best: -7.536437e+00 | no_improve:  21 | div: 0.2890 | dt: 30.194s
-[DE] iter   34 | best: -7.536437e+00 | no_improve:  22 | div: 0.2890 | dt: 30.174s
-[DE] iter   35 | best: -7.536437e+00 | no_improve:  23 | div: 0.2890 | dt: 30.170s
-[DE] iter   36 | best: -7.536437e+00 | no_improve:  24 | div: 0.2890 | dt: 30.214s
-[DE] iter   37 | best: -7.536437e+00 | no_improve:  25 | div: 0.2890 | dt: 30.282s
-[DE] iter   38 | best: -7.536437e+00 | no_improve:  26 | div: 0.2890 | dt: 30.281s
-[DE] iter   39 | best: -7.536437e+00 | no_improve:  27 | div: 0.2890 | dt: 30.302s
-[DE] iter   40 | best: -7.536437e+00 | no_improve:  28 | div: 0.2890 | dt: 30.203s
-[DE] iter   41 | best: -7.536437e+00 | no_improve:  29 | div: 0.2890 | dt: 30.273s
-[DE] iter   42 | best: -7.536437e+00 | no_improve:  30 | div: 0.2890 | dt: 30.319s
+DE: 11 params, pop=30, patience=10, workers=32
+[DE] iter    1 | best: -8.299220e+00 | no_improve:   0 | div: 0.2891 | dt: 6.881s
+[DE] iter    2 | best: -8.299220e+00 | no_improve:   1 | div: 0.2736 | dt: 7.535s
+[DE] iter    3 | best: -8.300625e+00 | no_improve:   0 | div: 0.2671 | dt: 7.163s
+[DE] iter    4 | best: -8.300625e+00 | no_improve:   1 | div: 0.2651 | dt: 6.855s
+[DE] iter    5 | best: -8.301809e+00 | no_improve:   0 | div: 0.2519 | dt: 7.893s
+[DE] iter    6 | best: -8.301809e+00 | no_improve:   1 | div: 0.2436 | dt: 9.103s
+[DE] iter    7 | best: -8.301809e+00 | no_improve:   2 | div: 0.2326 | dt: 8.868s
+[DE] iter    8 | best: -8.301809e+00 | no_improve:   3 | div: 0.2322 | dt: 8.741s
+[DE] iter    9 | best: -8.301809e+00 | no_improve:   4 | div: 0.2075 | dt: 8.283s
+[DE] iter   10 | best: -8.301809e+00 | no_improve:   5 | div: 0.1971 | dt: 8.405s
+[DE] iter   11 | best: -8.301809e+00 | no_improve:   6 | div: 0.1926 | dt: 8.717s
+[DE] iter   12 | best: -8.301814e+00 | no_improve:   0 | div: 0.1964 | dt: 8.247s
+[DE] iter   13 | best: -8.301814e+00 | no_improve:   1 | div: 0.1954 | dt: 8.412s
+[DE] iter   14 | best: -8.301814e+00 | no_improve:   2 | div: 0.1922 | dt: 8.325s
+[DE] iter   15 | best: -8.301817e+00 | no_improve:   0 | div: 0.1956 | dt: 7.965s
+[DE] iter   16 | best: -8.301817e+00 | no_improve:   1 | div: 0.1949 | dt: 6.918s
+[DE] iter   17 | best: -8.301817e+00 | no_improve:   2 | div: 0.2016 | dt: 7.090s
+[DE] iter   18 | best: -8.301817e+00 | no_improve:   3 | div: 0.2051 | dt: 6.754s
+[DE] iter   19 | best: -8.301817e+00 | no_improve:   4 | div: 0.2068 | dt: 7.340s
+[DE] iter   20 | best: -8.301817e+00 | no_improve:   5 | div: 0.2062 | dt: 8.258s
+[DE] iter   21 | best: -8.301817e+00 | no_improve:   6 | div: 0.2069 | dt: 9.037s
+[DE] iter   22 | best: -8.301817e+00 | no_improve:   7 | div: 0.2079 | dt: 8.288s
+[DE] iter   23 | best: -8.301817e+00 | no_improve:   8 | div: 0.2111 | dt: 8.881s
+[DE] iter   24 | best: -8.301817e+00 | no_improve:   9 | div: 0.2106 | dt: 8.612s
+[DE] iter   25 | best: -8.301817e+00 | no_improve:  10 | div: 0.2121 | dt: 8.555s
+[DE] iter   26 | best: -8.301817e+00 | no_improve:  11 | div: 0.2121 | dt: 8.469s
+[DE] iter   27 | best: -8.301817e+00 | no_improve:  12 | div: 0.2098 | dt: 8.658s
+[DE] iter   28 | best: -8.301817e+00 | no_improve:  13 | div: 0.2075 | dt: 8.353s
+[DE] iter   29 | best: -8.301817e+00 | no_improve:  14 | div: 0.2075 | dt: 8.324s
+[DE] iter   30 | best: -8.301817e+00 | no_improve:  15 | div: 0.2122 | dt: 7.915s
+[DE] iter   31 | best: -8.301817e+00 | no_improve:  16 | div: 0.2126 | dt: 6.934s
+[DE] iter   32 | best: -8.301817e+00 | no_improve:  17 | div: 0.2086 | dt: 7.130s
+[DE] iter   33 | best: -8.301817e+00 | no_improve:  18 | div: 0.2107 | dt: 6.834s
+[DE] iter   34 | best: -8.301817e+00 | no_improve:  19 | div: 0.2107 | dt: 6.890s
+[DE] iter   35 | best: -8.301817e+00 | no_improve:  20 | div: 0.2099 | dt: 8.257s
+[DE] iter   36 | best: -8.301817e+00 | no_improve:  21 | div: 0.2099 | dt: 8.009s
+[DE] iter   37 | best: -8.301817e+00 | no_improve:  22 | div: 0.2099 | dt: 8.416s
+[DE] iter   38 | best: -8.301817e+00 | no_improve:  23 | div: 0.2104 | dt: 8.941s
+[DE] iter   39 | best: -8.301817e+00 | no_improve:  24 | div: 0.2069 | dt: 8.851s
+[DE] iter   40 | best: -8.301817e+00 | no_improve:  25 | div: 0.2069 | dt: 8.783s
+[DE] iter   41 | best: -8.301817e+00 | no_improve:  26 | div: 0.2080 | dt: 8.676s
+[DE] iter   42 | best: -8.301817e+00 | no_improve:  27 | div: 0.2064 | dt: 8.732s
+[DE] iter   43 | best: -8.301817e+00 | no_improve:  28 | div: 0.2071 | dt: 8.242s
+[DE] iter   44 | best: -8.301817e+00 | no_improve:  29 | div: 0.2087 | dt: 9.189s
+[DE] iter   45 | best: -8.301817e+00 | no_improve:  30 | div: 0.2087 | dt: 7.660s
 
 ============================================================
-  Stop reason:  stagnated (div=0.2890, no_improve=30)
+  Stop reason:  stagnated (div=0.2087, no_improve=30)
   Converged:    True
-  Iterations:   42
-  Best metric:  -7.536437e+00
-  Diversity:    0.2890
+  Iterations:   45
+  Best metric:  -8.301817e+00
+  Diversity:    0.2087
   Best parameters:
-    Cload: 1.198781e+01
-    Lin: 1.330495e+00
-    Llatn: 1.487231e+00
-    Llatp: 7.097137e-01
-    Ltail1: 1.879154e-01
-    Ltail2: 4.227994e-01
-    Rsw: 2.826378e+02
-    Win: 4.673301e+01
-    Wlatn: 4.626088e+00
-    Wlatp: 2.972188e+01
-    Wrst: 3.715124e+00
-    Wrst2: 6.366785e-01
-    Wtail1: 1.564524e+01
-    Wtail2: 1.440826e+00
+    Cload: 8.071062e+00
+    Lin: 4.488006e-01
+    Llatn: 2.524897e-01
+    Llatp: 3.864906e-01
+    Ltail: 4.016259e-01
+    Rsw: 6.037343e+02
+    Win: 8.215240e+00
+    Wlatn: 2.836402e+00
+    Wlatp: 1.492868e+00
+    Wrst: 5.032863e+00
+    Wtail: 1.183468e+01
 ============================================================
+
+
+--- Behavioral SAR ADC Validation ---
+  Comparator: offset=0.00 mV, resolve=0.22 ns
+  Noise model: sigma=0.50 mV (71.1m LSB)
+  CDAC mismatch: unit_cap~32fF, sigma=0.63%
+  Cap weights (ideal vs actual):
+    bit 0: ideal=1, actual=1.0031 (err=0.313%)
+    bit 1: ideal=2, actual=2.0032 (err=0.160%)
+    bit 2: ideal=4, actual=4.0166 (err=0.415%)
+    bit 3: ideal=8, actual=7.9781 (err=-0.274%)
+    bit 4: ideal=16, actual=15.9597 (err=-0.252%)
+    bit 5: ideal=32, actual=31.9697 (err=-0.095%)
+    bit 6: ideal=64, actual=64.0203 (err=0.032%)
+    bit 7: ideal=128, actual=128.0536 (err=0.042%)
+  Running ramp test (4096 points)...
+  Ramp test: max DNL=0.191 LSB, max INL=0.214 LSB, missing codes=0
+  Running sine test (2048 samples)...
+  Sine test: SNDR=48.6 dB, ENOB=7.78 bits
+  Generating plots...
+--- Validation Complete ---
 
 
 ======================================================================
   EVALUATION REPORT — SKY130 8-bit SAR ADC
 ======================================================================
 
-  Score: 0.00 / 1.00  |  Time: 1270.1s
-  DE converged: True  |  Iterations: 42  |  Diversity: 0.2890
-  Stop reason: stagnated (div=0.2890, no_improve=30)
+  Score: 1.00 / 1.00  |  Time: 364.6s
+  DE converged: True  |  Iterations: 45  |  Diversity: 0.2087
+  Stop reason: stagnated (div=0.2087, no_improve=30)
 
-  Specs met: 0/6
+  Specs met: 6/6
 
   Spec                            Target     Measured     Unit   Status  Score
   -------------------------------------------------------------------------
-  resolution_bits                      8          N/A     bits     FAIL  0.00
-  sample_rate_ksps                  >100          N/A     kSPS     FAIL  0.00
-  inl_lsb                             <1          N/A      LSB     FAIL  0.00
-  dnl_lsb                           <0.5          N/A      LSB     FAIL  0.00
-  sndr_db                            >44          N/A       dB     FAIL  0.00
-  power_uw                          <500          N/A       uW     FAIL  0.00
+  resolution_bits                      8        8.000     bits     PASS  1.00
+  sample_rate_ksps                  >100    10000.000     kSPS     PASS  1.00
+  inl_lsb                             <1        0.214      LSB     PASS  1.00
+  dnl_lsb                           <0.5        0.191      LSB     PASS  1.00
+  sndr_db                            >44       48.575       dB     PASS  1.00
+  power_uw                          <500     8.24e-04       uW     PASS  1.00
 
   Best Parameters:
-    Cload                = 1.1988e+01
-    Lin                  = 1.3305e+00
-    Llatn                = 1.4872e+00
-    Llatp                = 7.0971e-01
-    Ltail1               = 1.8792e-01
-    Ltail2               = 4.2280e-01
-    Rsw                  = 2.8264e+02
-    Win                  = 4.6733e+01
-    Wlatn                = 4.6261e+00
-    Wlatp                = 2.9722e+01
-    Wrst                 = 3.7151e+00
-    Wrst2                = 6.3668e-01
-    Wtail1               = 1.5645e+01
-    Wtail2               = 1.4408e+00
+    Cload                = 8.0711e+00
+    Lin                  = 4.4880e-01
+    Llatn                = 2.5249e-01
+    Llatp                = 3.8649e-01
+    Ltail                = 4.0163e-01
+    Rsw                  = 6.0373e+02
+    Win                  = 8.2152e+00
+    Wlatn                = 2.8364e+00
+    Wlatp                = 1.4929e+00
+    Wrst                 = 5.0329e+00
+    Wtail                = 1.1835e+01
 
 ======================================================================
 
 
 Saved: best_parameters.csv, measurements.json, plots/
-Score: 0.00 | Specs met: 0/6 | Converged: True
+Score: 1.00 | Specs met: 6/6 | Converged: True
++00 | no_improve:  30 | div: 0.2867 | dt: 120.726s
+[DE] iter   81 | best: -8.238720e+00 | no_improve:  31 | div: 0.2867 | dt: 120.760s
+[DE] iter   82 | best: -8.238720e+00 | no_improve:  32 | div: 0.2867 | dt: 120.668s
+[DE] iter   83 | best: -8.238720e+00 | no_improve:  33 | div: 0.2865 | dt: 97.414s

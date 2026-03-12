@@ -189,7 +189,7 @@ def run_simulation(template: str, param_values: Dict[str, float],
     try:
         result = subprocess.run(
             [NGSPICE, "-b", path],
-            capture_output=True, text=True, timeout=60,
+            capture_output=True, text=True, timeout=15,
             cwd=PROJECT_DIR
         )
         output = result.stdout + result.stderr
@@ -723,10 +723,10 @@ def run_de(template: str, params: List[Dict], specs: Dict,
     os.unlink(tmp_csv)
 
     n_params = len(params)
-    pop_size = max(100, 5 * n_params) if not quick else max(30, 2 * n_params)
-    patience = 50 if not quick else 10
-    min_iter = 30 if not quick else 5
-    max_iter = 5000 if not quick else 50
+    pop_size = max(60, 4 * n_params) if not quick else max(30, 2 * n_params)
+    patience = 30 if not quick else 10
+    min_iter = 20 if not quick else 5
+    max_iter = 500 if not quick else 50
 
     if not n_workers:
         n_workers = os.cpu_count() or 8
@@ -998,8 +998,18 @@ def main():
         for name, val in sorted(best_params.items()):
             w.writerow([name, val])
 
+    # Convert numpy types to native Python for JSON serialization
+    def _convert(obj):
+        if isinstance(obj, dict):
+            return {k: _convert(v) for k, v in obj.items()}
+        elif isinstance(obj, (list, tuple)):
+            return [_convert(v) for v in obj]
+        elif hasattr(obj, 'item'):  # numpy scalar
+            return obj.item()
+        return obj
+
     with open("measurements.json", "w") as f:
-        json.dump({
+        json.dump(_convert({
             "measurements": measurements,
             "score": score,
             "details": details,
@@ -1011,7 +1021,7 @@ def main():
                 "stop_reason": de_result.get("stop_reason"),
                 "best_metric": de_result.get("best_metric"),
             },
-        }, f, indent=2)
+        }), f, indent=2)
 
     # Generate progress plot
     generate_progress_plot(RESULTS_FILE, PLOTS_DIR)
